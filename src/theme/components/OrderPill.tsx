@@ -1,4 +1,4 @@
-import { clsx } from 'clsx'
+import { cx } from './cx'
 import { useStorefront, type Order } from '@dripfunnel/storefront-core/theme'
 import styles from '../styles/order.module.css'
 
@@ -16,5 +16,5 @@ export const OrderPill = ({ order, className }: { order: Pick<Order, 'cancelled'
           : order.method === 'cod'
             ? { words: t('shop.order.pills.cod'), tone: styles.pillInfo }
             : { words: t('shop.order.pills.transfer'), tone: styles.pillWarn }
-  return <span className={clsx(styles.pill, pill.tone, className)}>{pill.words}</span>
+  return <span className={cx(styles.pill, pill.tone, className)}>{pill.words}</span>
 }

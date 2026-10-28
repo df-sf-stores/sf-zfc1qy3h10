@@ -1,4 +1,4 @@
-import { clsx } from 'clsx'
+import { cx } from './cx'
 import { Link, type OrderTracking } from '@dripfunnel/storefront-core/theme'
 import shop from '../styles/shop.module.css'
 import styles from '../styles/order.module.css'
@@ -15,7 +15,7 @@ export const DeliveryTracking = ({ tracking }: { tracking: OrderTracking }) => (
     </p>
     <ol className={styles.steps} aria-label={tracking.stepsLabel}>
       {tracking.steps.map((s) => (
-        <li key={s.state} className={clsx(styles.step, s.progress === 'done' && styles.stepDone, s.progress === 'current' && styles.stepCurrent, s.state === 'failed' && styles.stepBad)} aria-current={s.progress === 'current' ? 'step' : undefined}>
+        <li key={s.state} className={cx(styles.step, s.progress === 'done' && styles.stepDone, s.progress === 'current' && styles.stepCurrent, s.state === 'failed' && styles.stepBad)} aria-current={s.progress === 'current' ? 'step' : undefined}>
           {s.progress === 'done' && s.state !== 'failed' && s.state !== 'cancelled' ? <span className={styles.tick} aria-hidden="true" /> : null}
           <span className={styles.hidden}>{s.progressLabel}</span>
           <span className={styles.stepLabel}>{s.label}</span>
