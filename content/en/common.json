@@ -3,12 +3,14 @@
     "label": "Main",
     "menu": "Menu",
     "submenu": "Submenu: {item}",
+    "home": "Home",
     "shop": "Shop",
     "about": "About",
     "contact": "Contact"
   },
   "tools": {
     "search": "Search",
+    "searchPrompt": "Search products…",
     "account": "Account",
     "cart": "Cart",
     "cartCount": "Cart, {count, plural, one {# item} other {# items}}"
@@ -23,6 +25,7 @@
     "privacy": "Privacy",
     "terms": "Terms",
     "legal": "Legal",
-    "notice": "Legal notice"
+    "notice": "Legal notice",
+    "touch": "Get in touch"
   }
 }

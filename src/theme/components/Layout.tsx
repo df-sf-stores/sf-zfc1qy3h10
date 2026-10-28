@@ -16,38 +16,24 @@ export const Layout = ({ children }: { children: ReactNode }) => {
           <Link href="/" className={styles.brand}>
             {store.name}
           </Link>
-          <Menu label={t('common.nav.menu')}>
-            <nav className={styles.nav} aria-label={t('common.nav.label')}>
-              {menu.items.length ? (
-                menu.items.map((item) => <NavItem key={item.id} item={item} />)
-              ) : (
-                <Link href="/collections/all/" className={styles.navLink}>
-                  {t('common.nav.shop')}
-                </Link>
-              )}
-              <Link href="/about/" className={styles.navLink}>
-                {t('common.nav.about')}
-              </Link>
-              <Link href="/contact/" className={styles.navLink}>
-                {t('common.nav.contact')}
-              </Link>
-            </nav>
-          </Menu>
-          <div className={styles.tools}>
-            <Link href="/search/" className={styles.tool}>
-              <svg className={styles.icon} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <Link href="/search/" className={styles.search}>
+            <span className={styles.searchText}>{t('common.tools.searchPrompt')}</span>
+            <span className={styles.searchIcon} aria-hidden="true">
+              <svg className={styles.icon} viewBox="0 0 24 24" focusable="false">
                 <circle cx="11" cy="11" r="6.5" />
                 <path d="M16 16l4.5 4.5" />
               </svg>
-              <span className={styles.hidden}>{t('common.tools.search')}</span>
-            </Link>
-            <Link href="/account/" className={styles.tool}>
+            </span>
+          </Link>
+          <div className={styles.tools}>
+            <Link href="/account/" className={styles.account}>
               <svg className={styles.icon} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                 <circle cx="12" cy="8.5" r="3.8" />
                 <path d="M4.5 20c1.2-3.6 4-5.4 7.5-5.4s6.3 1.8 7.5 5.4" />
               </svg>
-              <span className={styles.hidden}>{t('common.tools.account')}</span>
+              <span className={styles.accountLabel}>{t('common.tools.account')}</span>
             </Link>
+            <span className={styles.divider} aria-hidden="true" />
             <Link href="/cart/" className={styles.tool}>
               <svg className={styles.icon} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                 <path d="M5.5 8h13l-1 12h-11z" />
@@ -63,18 +49,41 @@ export const Layout = ({ children }: { children: ReactNode }) => {
           </div>
         </div>
       </header>
+      <div className={styles.navBar}>
+        <div className={styles.navInner}>
+          <Menu label={t('common.nav.menu')}>
+            <nav className={styles.nav} aria-label={t('common.nav.label')}>
+              <Link href="/" className={styles.navLink}>
+                {t('common.nav.home')}
+              </Link>
+              {menu.items.length ? (
+                menu.items.map((item) => <NavItem key={item.id} item={item} />)
+              ) : (
+                <Link href="/collections/all/" className={styles.navLink}>
+                  {t('common.nav.shop')}
+                </Link>
+              )}
+              <Link href="/about/" className={styles.navLink}>
+                {t('common.nav.about')}
+              </Link>
+              <Link href="/contact/" className={styles.navLink}>
+                {t('common.nav.contact')}
+              </Link>
+            </nav>
+          </Menu>
+        </div>
+      </div>
       <main className={styles.main}>{children}</main>
       <footer className={styles.footer}>
         <div className={styles.columns}>
           <div className={styles.about}>
             <p className={styles.footerBrand}>{store.name}</p>
-            <p className={styles.note}>{store.tagline ?? t('common.footer.note')}</p>
-            {store.contactEmail ? <p className={styles.contact}>{store.contactEmail}</p> : null}
-            {store.contactPhone ? <p className={styles.contact}>{store.contactPhone}</p> : null}
+            {store.tagline ? <p className={styles.tagline}>{store.tagline}</p> : null}
+            <p className={styles.note}>{store.description || t('common.footer.note')}</p>
             {store.social.length ? (
               <div className={styles.social}>
                 {store.social.map((s) => (
-                  <Link key={s.network} href={s.url} className={styles.footerLink}>
+                  <Link key={s.network} href={s.url} className={styles.socialLink}>
                     {s.network}
                   </Link>
                 ))}
@@ -91,6 +100,9 @@ export const Layout = ({ children }: { children: ReactNode }) => {
             </Link>
             <Link href="/account/" className={styles.footerLink}>
               {t('common.tools.account')}
+            </Link>
+            <Link href="/cart/" className={styles.footerLink}>
+              {t('common.tools.cart')}
             </Link>
           </div>
           <div className={styles.links}>
@@ -117,6 +129,13 @@ export const Layout = ({ children }: { children: ReactNode }) => {
               {t('common.footer.notice')}
             </Link>
           </div>
+          {store.contactEmail || store.contactPhone ? (
+            <div className={styles.links}>
+              <h2 className={styles.heading}>{t('common.footer.touch')}</h2>
+              {store.contactPhone ? <p className={styles.contact}>{store.contactPhone}</p> : null}
+              {store.contactEmail ? <p className={styles.contact}>{store.contactEmail}</p> : null}
+            </div>
+          ) : null}
         </div>
         <div className={styles.base}>
           <ConsentSettingsButton t={t} className={styles.cookies} />

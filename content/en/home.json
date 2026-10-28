@@ -1,27 +1,48 @@
 {
   "hero": {
-    "eyebrow": "Welcome",
-    "title": "Welcome to {store}",
-    "lead": "Take a look around and find something you love.",
+    "eyebrow": "Classical dance essentials",
+    "title": "Grace in every movement",
+    "lead": "Costumes, ghungroo and jewellery made for the classical stage.",
     "shop": "Shop now",
     "story": "Our story"
   },
+  "promises": {
+    "craft": {
+      "title": "Authentic craft",
+      "body": "Traditional designs with temple-style detailing"
+    },
+    "stage": {
+      "title": "Stage ready",
+      "body": "Made for rehearsal, recital and performance"
+    },
+    "secure": {
+      "title": "Secure checkout",
+      "body": "Pay safely through trusted payment partners"
+    },
+    "support": {
+      "title": "Personal support",
+      "body": "Talk to us by phone or WhatsApp"
+    }
+  },
   "story": {
     "eyebrow": "Our story",
-    "title": "Who we are",
-    "body": "Write a few lines about who you are, what you make and why you started.",
-    "more": "Read more"
+    "title": "Tradition in every thread",
+    "body": "We dress classical dancers in the colours, weaves and ornaments of the stage, from a first practice saree to a full performance set.",
+    "more": "Explore the collection"
   },
   "signup": {
-    "title": "Keep in touch",
-    "body": "Create an account to follow your orders and check out faster.",
-    "action": "Create an account"
+    "eyebrow": "Join {store}",
+    "title": "Your stage, beautifully prepared",
+    "body": "Create an account for faster checkout, order tracking and saved addresses.",
+    "action": "Create account"
   },
   "collections": {
-    "title": "Shop by collection"
+    "eyebrow": "Shop by category",
+    "title": "Crafted for the classical stage",
+    "explore": "Explore"
   },
   "newest": {
-    "title": "New in",
-    "all": "See all"
+    "title": "New arrivals",
+    "all": "View all products"
   }
 }

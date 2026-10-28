@@ -13,6 +13,7 @@ export const ProductCard = ({ product }: { product: Card }) => {
         </div>
         <h3 className={styles.cardName}>{product.name}</h3>
       </Link>
+      <span className={styles.cardRule} aria-hidden="true" />
       {product.price ? (
         <p className={styles.cardPrice}>
           {product.from ? <span className={styles.from}>{t('shop.card.from')}</span> : null}
