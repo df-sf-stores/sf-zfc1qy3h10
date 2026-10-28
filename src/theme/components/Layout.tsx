@@ -8,6 +8,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   const { store, t, mode, poweredBy } = useStorefront()
   const menu = useMenu()
   const { count } = useCart()
+  const whatsapp = store.social.find((s) => s.network === 'whatsapp')
   return (
     <div className={styles.shell}>
       {mode === 'live' ? null : <PreviewBanner t={t} className={styles.preview} />}
@@ -71,6 +72,17 @@ export const Layout = ({ children }: { children: ReactNode }) => {
               </Link>
             </nav>
           </Menu>
+          {menu.items.length ? (
+            <ul className={styles.chips}>
+              {menu.items.map((item) => (
+                <li key={item.id}>
+                  <Link href={item.href} className={styles.chip}>
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : null}
         </div>
       </div>
       <main className={styles.main}>{children}</main>
@@ -92,11 +104,25 @@ export const Layout = ({ children }: { children: ReactNode }) => {
           </div>
           <div className={styles.links}>
             <h2 className={styles.heading}>{t('common.footer.shop')}</h2>
+            {menu.items.length ? (
+              menu.items.map((item) => (
+                <Link key={item.id} href={item.href} className={styles.footerLink}>
+                  {item.label}
+                </Link>
+              ))
+            ) : (
+              <Link href="/collections/all/" className={styles.footerLink}>
+                {t('common.footer.all')}
+              </Link>
+            )}
+          </div>
+          <div className={styles.links}>
+            <h2 className={styles.heading}>{t('common.footer.help')}</h2>
             <Link href="/collections/all/" className={styles.footerLink}>
               {t('common.footer.all')}
             </Link>
-            <Link href="/about/" className={styles.footerLink}>
-              {t('common.nav.about')}
+            <Link href="/account/orders/" className={styles.footerLink}>
+              {t('common.footer.orders')}
             </Link>
             <Link href="/account/" className={styles.footerLink}>
               {t('common.tools.account')}
@@ -104,31 +130,28 @@ export const Layout = ({ children }: { children: ReactNode }) => {
             <Link href="/cart/" className={styles.footerLink}>
               {t('common.tools.cart')}
             </Link>
-          </div>
-          <div className={styles.links}>
-            <h2 className={styles.heading}>{t('common.footer.help')}</h2>
             <Link href="/contact/" className={styles.footerLink}>
               {t('common.nav.contact')}
             </Link>
-            <Link href="/policies/shipping/" className={styles.footerLink}>
-              {t('common.footer.shipping')}
-            </Link>
-            <Link href="/policies/returns/" className={styles.footerLink}>
-              {t('common.footer.returns')}
-            </Link>
           </div>
-          <div className={styles.links}>
+          <nav className={styles.links} aria-label={t('common.footer.legal')}>
             <h2 className={styles.heading}>{t('common.footer.legal')}</h2>
-            <Link href="/policies/terms/" className={styles.footerLink}>
-              {t('common.footer.terms')}
+            <Link href="/about/" className={styles.footerLink}>
+              {t('common.nav.about')}
             </Link>
             <Link href="/policies/privacy/" className={styles.footerLink}>
               {t('common.footer.privacy')}
             </Link>
-            <Link href="/policies/legal/" className={styles.footerLink}>
-              {t('common.footer.notice')}
+            <Link href="/policies/returns/" className={styles.footerLink}>
+              {t('common.footer.returns')}
             </Link>
-          </div>
+            <Link href="/policies/shipping/" className={styles.footerLink}>
+              {t('common.footer.shipping')}
+            </Link>
+            <Link href="/policies/terms/" className={styles.footerLink}>
+              {t('common.footer.terms')}
+            </Link>
+          </nav>
           {store.contactEmail || store.contactPhone ? (
             <div className={styles.links}>
               <h2 className={styles.heading}>{t('common.footer.touch')}</h2>
@@ -138,10 +161,19 @@ export const Layout = ({ children }: { children: ReactNode }) => {
           ) : null}
         </div>
         <div className={styles.base}>
+          <p className={styles.copyright}>{t('common.footer.rights', { store: store.name })}</p>
           <ConsentSettingsButton t={t} className={styles.cookies} />
           <PoweredBy brand={poweredBy} t={t} className={styles.powered} />
         </div>
       </footer>
+      {whatsapp ? (
+        <Link href={whatsapp.url} className={styles.whatsapp}>
+          <svg className={styles.whatsappIcon} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M12 3a9 9 0 00-7.8 13.5L3 21l4.6-1.2A9 9 0 1012 3zm4.4 12.4c-.2.5-1.1 1-1.6 1-.4.1-.9.1-1.5-.1a13 13 0 01-1.4-.5 10.6 10.6 0 01-4-3.6 4.6 4.6 0 01-1-2.4c0-1.2.6-1.7.8-2 .2-.2.5-.3.6-.3h.5c.1 0 .4 0 .6.4l.8 1.9c.1.1.1.3 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.7 1.2 1.6 1.9 1 .9 1.9 1.2 2.2 1.3.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.8.9c.3.1.4.2.5.3.1.2.1.7-.1 1.3z" />
+          </svg>
+          <span className={styles.hidden}>{t('common.footer.whatsapp')}</span>
+        </Link>
+      ) : null}
       <ConsentBanner t={t} className={styles.consent} />
     </div>
   )

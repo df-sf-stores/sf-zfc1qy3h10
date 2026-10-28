@@ -1,48 +1,82 @@
 {
   "hero": {
-    "eyebrow": "Classical dance essentials",
-    "title": "Grace in every movement",
-    "lead": "Costumes, ghungroo and jewellery made for the classical stage.",
-    "shop": "Shop now",
-    "story": "Our story"
+    "region": "Featured collections",
+    "role": "carousel",
+    "previous": "Previous slide",
+    "next": "Next slide",
+    "goTo": "Go to slide {n}",
+    "costume": "Maroon and gold silk blend Bharatanatyam costume set for women, shop now",
+    "ghungroo": "Maroon brass velvet 5-line ghungroo anklet with adjustable strap, shop now",
+    "jada": "Multicolour alloy artificial pearl traditional jada set for women, shop now"
   },
+  "newest": "New Arrivals",
+  "featured": "Featured Products",
+  "viewAll": "View all products",
   "promises": {
+    "title": "Why shop with us",
     "craft": {
-      "title": "Authentic craft",
+      "title": "Authentic Craft",
       "body": "Traditional designs with temple-style detailing"
     },
     "stage": {
-      "title": "Stage ready",
+      "title": "Stage Ready",
       "body": "Made for rehearsal, recital and performance"
     },
     "secure": {
-      "title": "Secure checkout",
+      "title": "Secure Checkout",
       "body": "Pay safely through trusted payment partners"
     },
     "support": {
-      "title": "Personal support",
-      "body": "Talk to us by phone or WhatsApp"
+      "title": "Personal Support",
+      "body": "Talk to us on phone or WhatsApp"
+    }
+  },
+  "collections": {
+    "eyebrow": "Shop by Category",
+    "title": "Crafted for the Classical Stage",
+    "explore": "Explore"
+  },
+  "deals": {
+    "eyebrow": "Special offers",
+    "title": "Amazing Deals"
+  },
+  "spotlight": {
+    "jewellery": {
+      "eyebrow": "Temple Jewellery",
+      "title": "Jewellery for the Stage",
+      "body": "Kemp-stone necklaces, jhumkas and full Bharatanatyam ornament sets in the temple style, crafted to catch the light with every expression.",
+      "cta": "Shop all jewellery"
+    },
+    "accessories": {
+      "eyebrow": "Adorn the Dancer",
+      "title": "Bharatanatyam Accessories",
+      "body": "Temple ornaments and hair adornments: the finishing touches that complete a classical look on stage.",
+      "cta": "Shop all accessories"
+    },
+    "ghungroo": {
+      "eyebrow": "The Rhythm of Dance",
+      "title": "Ghungroo",
+      "body": "Brass ankle bells on soft velvet pads in 3, 4 and 5 lines, made to ring clear with every step of your footwork.",
+      "cta": "Shop all ghungroo"
     }
   },
   "story": {
-    "eyebrow": "Our story",
-    "title": "Tradition in every thread",
-    "body": "We dress classical dancers in the colours, weaves and ornaments of the stage, from a first practice saree to a full performance set.",
+    "eyebrow": "Our Story",
+    "title": "Tradition in every thread,",
+    "accent": "grace in every move.",
+    "lead": "We dress classical dancers in the colours and craft of the temple stage: rich silks, resonant ghungroo and gleaming ornaments.",
+    "body": "From a first practice saree to a full arangetram ensemble, every piece is chosen to honour the art form and to perform as beautifully as it looks.",
     "more": "Explore the collection"
   },
+  "range": {
+    "eyebrow": "Explore the Range",
+    "title": "Find Exactly What You Need",
+    "shopAll": "Shop all {name}"
+  },
   "signup": {
-    "eyebrow": "Join {store}",
+    "eyebrow": "Join us",
     "title": "Your stage, beautifully prepared",
     "body": "Create an account for faster checkout, order tracking and saved addresses.",
-    "action": "Create account"
-  },
-  "collections": {
-    "eyebrow": "Shop by category",
-    "title": "Crafted for the classical stage",
-    "explore": "Explore"
-  },
-  "newest": {
-    "title": "New arrivals",
-    "all": "View all products"
+    "action": "Create Account"
   }
 }

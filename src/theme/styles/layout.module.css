@@ -438,6 +438,90 @@
   display: block;
 }
 
+.copyright {
+  margin: 0;
+  margin-right: auto;
+}
+
+/* Phones: the menu's top-level items as a sideways strip of chips beside the menu button. */
+.chips {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  gap: 6px;
+  margin: 0;
+  padding: 6px 4px;
+  list-style: none;
+  order: 2;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+
+.chips li {
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}
+
+.chip {
+  display: inline-flex;
+  height: 32px;
+  box-sizing: border-box;
+  align-items: center;
+  padding: 0 12px;
+  border: 1px solid rgb(210 162 73 / 40%);
+  border-radius: 999px;
+  background: rgb(252 250 244 / 60%);
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.whatsapp {
+  position: fixed;
+  z-index: 30;
+  right: 20px;
+  bottom: 20px;
+  display: flex;
+  width: 56px;
+  height: 56px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #25d366;
+  box-shadow:
+    0 0 0 8px rgb(37 211 102 / 15%),
+    0 8px 24px rgb(0 0 0 / 20%);
+  color: #fff;
+  transition: transform 0.3s ease;
+}
+
+.whatsapp:hover {
+  transform: scale(1.06);
+}
+
+.whatsappIcon {
+  width: 28px;
+  height: 28px;
+  fill: currentcolor;
+}
+
+.chip:focus-visible,
+.whatsapp:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
 .brand:focus-visible,
 .search:focus-visible,
 .account:focus-visible,
@@ -497,6 +581,10 @@
   .navInner {
     justify-content: center;
     padding-inline: 32px;
+  }
+
+  .chips {
+    display: none;
   }
 
   .nav {

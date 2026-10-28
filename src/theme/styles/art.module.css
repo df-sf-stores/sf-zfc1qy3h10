@@ -1,0 +1,47 @@
+/*
+ * The store's artwork: hero banners and category photos. A theme may paint a picture only with
+ * url(<media id>) naming one of the store's uploaded media, so each class adds its
+ * background-image once that picture is in the store's media library. Until then a gradient in
+ * the picture's own colours holds its place.
+ */
+
+.art {
+  background-color: var(--soft);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Hero banners */
+
+.bannerCostume {
+  background-image: radial-gradient(circle at 70% 40%, #fff7e8 0, #f1dfbd 55%, #d9bb84 100%);
+}
+
+.bannerGhungroo {
+  background-image: radial-gradient(circle at 70% 40%, #7a3a1c 0, #3b1a0e 60%, #1e0d07 100%);
+}
+
+.bannerJada {
+  background-image: radial-gradient(circle at 70% 40%, #fffaf0 0, #f3e6cc 55%, #dcc597 100%);
+}
+
+/* Category photos */
+
+.costumes {
+  background-image: linear-gradient(160deg, #b23a3a, #6d1520);
+  background-position: center 25%;
+}
+
+.jewellery {
+  background-image: linear-gradient(160deg, #c99a4b, #7a3b1c);
+}
+
+.ghungroo {
+  background-image: linear-gradient(160deg, #a3242f, #4a0f16);
+}
+
+.accessories {
+  background-image: linear-gradient(160deg, #3d6b45, #7a1c28);
+  background-position: center 25%;
+}

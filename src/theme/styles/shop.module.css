@@ -289,15 +289,18 @@
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  padding: 10px 10px 16px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
+  padding: 8px 8px 14px;
+  border: 1px solid rgb(210 162 73 / 25%);
+  border-radius: 16px;
   background: var(--surface);
+  box-shadow: 0 1px 2px rgb(42 10 14 / 6%);
   text-align: center;
   transition: transform 0.3s ease;
 }
 
 .card:hover {
+  border-color: rgb(210 162 73 / 60%);
+  box-shadow: 0 22px 40px -24px rgb(74 15 22 / 55%);
   transform: translateY(-4px);
 }
 
@@ -323,9 +326,13 @@
   width: 100%;
   box-sizing: border-box;
   aspect-ratio: 4 / 5;
-  border: 1px solid var(--line);
-  border-radius: 999px 999px 8px 8px;
-  background: var(--soft);
+  border: 1px solid rgb(210 162 73 / 45%);
+  border-radius: 999px 999px 12px 12px;
+  background: var(--surface);
+}
+
+.card:hover .cardPicture {
+  border-color: var(--gold);
 }
 
 .cardImage {
@@ -379,12 +386,52 @@
   -webkit-line-clamp: 2;
 }
 
+/* A small gold diamond between two fading rules. */
 .cardRule {
-  width: 48px;
-  height: 5px;
+  width: min(100%, 112px);
+  height: 8px;
   background:
-    radial-gradient(circle, var(--gold) 2px, transparent 2.5px) center / 5px 5px no-repeat,
-    linear-gradient(var(--line), var(--line)) center / 100% 1px no-repeat;
+    conic-gradient(from 45deg at 50% 50%, var(--gold) 90deg, transparent 0) center / 6px 6px no-repeat,
+    linear-gradient(to right, transparent, var(--gold) 42%, transparent 42% 58%, var(--gold) 58%, transparent) center / 100% 1px no-repeat;
+}
+
+.cardMore {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: auto;
+  padding-top: 4px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.card:hover .cardMore,
+.card:hover .cardName {
+  color: var(--accent);
+}
+
+.cardMoreIcon {
+  width: 12px;
+  height: 12px;
+  fill: none;
+  stroke: currentcolor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .cardMoreIcon {
+  transform: translateX(2px);
+}
+
+.cardMore:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
 }
 
 .cardPrice {

@@ -5,7 +5,8 @@
   "card": {
     "from": "From",
     "soldOut": "Sold out",
-    "noPicture": "No picture yet"
+    "noPicture": "No picture yet",
+    "view": "View details"
   },
   "listing": {
     "showing": "{count, plural, one {Showing # product} other {Showing # products}}",

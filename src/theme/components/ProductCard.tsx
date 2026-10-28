@@ -20,6 +20,12 @@ export const ProductCard = ({ product }: { product: Card }) => {
           <Price money={product.price} compareAt={product.compareAt} includesTax={store.pricesIncludeTax} locale={locale} t={t} className={styles.price} />
         </p>
       ) : null}
+      <Link href={product.href} className={styles.cardMore}>
+        {t('shop.card.view')}
+        <svg className={styles.cardMoreIcon} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M5 12h14M13 6l6 6-6 6" />
+        </svg>
+      </Link>
     </article>
   )
 }
