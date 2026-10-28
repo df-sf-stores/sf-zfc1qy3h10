@@ -375,6 +375,7 @@
 
 .signupEyebrow {
   margin: 0;
+  overflow-wrap: anywhere;
   color: var(--gold);
   font-size: 12px;
   font-weight: 600;
