@@ -108,7 +108,7 @@ const Deals = ({ exists }: { exists: boolean }) => {
 export const HomePage = () => {
   const { t } = useStorefront()
   const menu = useMenu()
-  const { collections: all, status } = useCollections({ first: 50 })
+  const { collections: all, status } = useCollections({ first: 20 })
   const categories = all.filter((c) => !slugOf(c).startsWith(bannerPrefix))
   const imageOf = (slug: string) => all.find((c) => slugOf(c) === slug)?.image ?? null
   const has = (slug: string) => all.some((c) => slugOf(c) === slug)

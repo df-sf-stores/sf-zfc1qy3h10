@@ -101,29 +101,38 @@
 
 .dots {
   position: absolute;
-  bottom: 12px;
+  bottom: 4px;
   left: 50%;
   display: flex;
-  gap: 8px;
   transform: translateX(-50%);
 }
 
+/* A 24px tap target (WCAG 2.2 target size) around the small visible pill. */
 .dot {
-  width: 12px;
-  height: 6px;
-  padding: 0;
+  display: flex;
+  min-width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2px;
   border: 0;
-  border-radius: 999px;
-  background: rgb(255 255 255 / 60%);
+  background: none;
   cursor: pointer;
-  transition: transform 0.3s ease;
 }
 
-.dot:hover {
+.dot::before {
+  width: 12px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 60%);
+  content: '';
+}
+
+.dot:hover::before {
   background: #fff;
 }
 
-.dotOn {
+.dotOn::before {
   width: 32px;
   background: var(--gold);
 }
@@ -150,13 +159,12 @@
   }
 
   .dots {
-    bottom: 20px;
+    bottom: 12px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .slide,
-  .dot {
+  .slide {
     transition: none;
   }
 }
