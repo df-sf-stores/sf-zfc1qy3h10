@@ -11,6 +11,8 @@
   --accent-ink: #fcf8f0;
   --gold: #d2a249;
   --gold-ink: #35180e;
+  /* Gold dark enough to read as text on the cream background. */
+  --gold-text: #8a5f1a;
   --deep: #4a0f16;
   --danger: #9a3412;
   --focus: #00519f;

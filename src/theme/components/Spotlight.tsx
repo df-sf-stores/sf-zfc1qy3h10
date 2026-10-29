@@ -1,4 +1,4 @@
-import { Link, useListing } from '@dripfunnel/storefront-core/theme'
+import { Image, Link, useListing, type Photo } from '@dripfunnel/storefront-core/theme'
 import { Ornament } from './Ornament'
 import { ProductCard } from './ProductCard'
 import { cx } from './cx'
@@ -9,6 +9,8 @@ type SpotlightProps = {
   collection: string
   /** The class that paints the banner's category photo. */
   picture: string | undefined
+  /** The category's own picture, painted over the placeholder once the collection has one. */
+  image: Photo | null
   eyebrow: string
   title: string
   body: string
@@ -21,7 +23,7 @@ type SpotlightProps = {
  * A category banner beside four of its products, between two temple-border bands.
  * Hidden until the collection has products, so an empty or missing collection leaves no gap.
  */
-export const Spotlight = ({ collection, picture, eyebrow, title, body, cta, end = false }: SpotlightProps) => {
+export const Spotlight = ({ collection, picture, image, eyebrow, title, body, cta, end = false }: SpotlightProps) => {
   const { items } = useListing({ collection })
   if (!items.length) return null
   const href = `/collections/${collection}/`
@@ -31,6 +33,7 @@ export const Spotlight = ({ collection, picture, eyebrow, title, body, cta, end 
       <div className={cx(styles.spotlightInner, end && styles.spotlightEnd)}>
         <div className={styles.spotlightAside}>
           <div className={cx(styles.spotlightBanner, art.art, picture)}>
+            {image ? <Image image={image} alt="" ratio={1} sizes="(min-width: 768px) 50vw, 100vw" className={styles.cover} /> : null}
             <span className={styles.spotlightFrame} />
             <div className={styles.spotlightCopy}>
               <p className={styles.spotlightEyebrow}>{eyebrow}</p>

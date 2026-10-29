@@ -1,8 +1,7 @@
 /*
- * The store's artwork: hero banners and category photos. A theme may paint a picture only with
- * url(<media id>) naming one of the store's uploaded media, so each class adds its
- * background-image once that picture is in the store's media library. Until then a gradient in
- * the picture's own colours holds its place.
+ * Placeholder artwork: a gradient in each picture's own colours, shown wherever its collection
+ * has no image yet. Hero banners come from the images of the banner- collections, category
+ * pictures from each category collection's image.
  */
 
 .art {

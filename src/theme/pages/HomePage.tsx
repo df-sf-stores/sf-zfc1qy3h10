@@ -17,6 +17,12 @@ const collections = {
   ghungroo: 'ghungroo',
 }
 
+/**
+ * Until the store has a media library, each hero banner is the image of a collection kept for it.
+ * Collections whose slug starts with this prefix carry artwork only and stay out of every list.
+ */
+const bannerPrefix = 'banner-'
+
 /** A category's painted photo, for collections the catalogue gives no picture of their own. */
 const categoryArt = new Map([
   ['costumes', art.costumes],
@@ -102,11 +108,15 @@ const Deals = () => {
 export const HomePage = () => {
   const { t } = useStorefront()
   const menu = useMenu()
-  const { collections: categories, status } = useCollections({ first: 8 })
+  const { collections: all, status } = useCollections({ first: 50 })
+  const categories = all.filter((c) => !slugOf(c).startsWith(bannerPrefix))
+  const imageOf = (slug: string) => all.find((c) => slugOf(c) === slug)?.image ?? null
   const newest = useProducts({ sort: 'newest', first: 8 })
   const primary = categories[0] ? slugOf(categories[0]) : null
   const featured = useListing({ collection: primary }, primary !== null)
   const pictureOf = (c: CollectionCard) => categoryArt.get(slugOf(c))
+  const storyImage = imageOf('costumes')
+  const signupImage = imageOf(collections.jewellery)
   const groups = menu.items.filter((item) => item.children.length)
   const viewAll = (
     <Link href="/collections/all/" className={styles.textLink}>
@@ -116,11 +126,12 @@ export const HomePage = () => {
   )
   return (
     <Layout>
+      <h1 className={styles.pageTitle}>{t('home.title')}</h1>
       <HeroCarousel
         slides={[
-          { key: 'costume', art: art.bannerCostume, href: bannerHref(categories, ['bharatnatyam-dress', 'costume']), label: t('home.hero.costume') },
-          { key: 'ghungroo', art: art.bannerGhungroo, href: bannerHref(categories, ['5-line', 'ghungroo']), label: t('home.hero.ghungroo') },
-          { key: 'jada', art: art.bannerJada, href: bannerHref(categories, ['ornament-set', 'accessor']), label: t('home.hero.jada') },
+          { key: 'costume', art: art.bannerCostume, image: imageOf('banner-costume'), href: bannerHref(categories, ['bharatnatyam-dress', 'costume']), label: t('home.hero.costume') },
+          { key: 'ghungroo', art: art.bannerGhungroo, image: imageOf('banner-ghungroo'), href: bannerHref(categories, ['5-line', 'ghungroo']), label: t('home.hero.ghungroo') },
+          { key: 'jada', art: art.bannerJada, image: imageOf('banner-jada'), href: bannerHref(categories, ['ornament-set', 'accessor']), label: t('home.hero.jada') },
         ]}
         labels={{ region: t('home.hero.region'), role: t('home.hero.role'), previous: t('home.hero.previous'), next: t('home.hero.next'), goTo: (n) => t('home.hero.goTo', { n }) }}
       />
@@ -174,6 +185,7 @@ export const HomePage = () => {
       <Spotlight
         collection={collections.jewellery}
         picture={art.jewellery}
+        image={imageOf(collections.jewellery)}
         eyebrow={t('home.spotlight.jewellery.eyebrow')}
         title={t('home.spotlight.jewellery.title')}
         body={t('home.spotlight.jewellery.body')}
@@ -184,6 +196,7 @@ export const HomePage = () => {
       <Spotlight
         collection={collections.accessories}
         picture={art.accessories}
+        image={imageOf(collections.accessories)}
         eyebrow={t('home.spotlight.accessories.eyebrow')}
         title={t('home.spotlight.accessories.title')}
         body={t('home.spotlight.accessories.body')}
@@ -192,6 +205,7 @@ export const HomePage = () => {
       <Spotlight
         collection={collections.ghungroo}
         picture={art.ghungroo}
+        image={imageOf(collections.ghungroo)}
         eyebrow={t('home.spotlight.ghungroo.eyebrow')}
         title={t('home.spotlight.ghungroo.title')}
         body={t('home.spotlight.ghungroo.body')}
@@ -200,7 +214,9 @@ export const HomePage = () => {
       />
       <section className={styles.story}>
         <div className={styles.storyFrame}>
-          <div className={cx(styles.storyPicture, art.art, art.costumes)} />
+          <div className={cx(styles.storyPicture, art.art, art.costumes)}>
+            {storyImage ? <Image image={storyImage} alt="" ratio={0.8} sizes="(min-width: 900px) 448px, 100vw" className={styles.cover} /> : null}
+          </div>
         </div>
         <div className={styles.storyCopy}>
           <p className={styles.eyebrow}>{t('home.story.eyebrow')}</p>
@@ -252,6 +268,7 @@ export const HomePage = () => {
         </section>
       ) : null}
       <section className={cx(styles.signup, art.art, art.jewellery)}>
+        {signupImage ? <Image image={signupImage} alt="" ratio={16 / 9} sizes="100vw" className={cx(styles.cover, styles.signupImage)} /> : null}
         <div className={styles.signupInner}>
           <p className={styles.signupEyebrow}>{t('home.signup.eyebrow')}</p>
           <h2 className={styles.signupTitle}>{t('home.signup.title')}</h2>
