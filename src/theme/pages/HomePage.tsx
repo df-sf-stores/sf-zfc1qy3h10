@@ -28,6 +28,7 @@ const categoryArt = new Map([
   ['costumes', art.costumes],
   ['jewellery', art.jewellery],
   ['ghungroo', art.ghungroo],
+  ['accessories', art.accessories],
   [collections.accessories, art.accessories],
 ])
 
