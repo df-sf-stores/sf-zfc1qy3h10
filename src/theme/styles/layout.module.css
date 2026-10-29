@@ -344,6 +344,7 @@
 .note {
   max-width: 36ch;
   margin: 0;
+  overflow-wrap: anywhere;
 }
 
 .contact {

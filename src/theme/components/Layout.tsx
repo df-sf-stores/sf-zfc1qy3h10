@@ -133,6 +133,9 @@ export const Layout = ({ children }: { children: ReactNode }) => {
             <Link href="/contact/" className={styles.footerLink}>
               {t('common.nav.contact')}
             </Link>
+            <Link href="/faq/" className={styles.footerLink}>
+              {t('common.footer.faq')}
+            </Link>
           </div>
           <nav className={styles.links} aria-label={t('common.footer.legal')}>
             <h2 className={styles.heading}>{t('common.footer.legal')}</h2>

@@ -63,9 +63,40 @@
     "lead": "The shop is closed for now. Please come back later."
   },
   "about": {
-    "title": "About us",
-    "first": "Write a few lines about who you are and why you started.",
-    "second": "Tell shoppers what you make, how you make it and what you care about."
+    "eyebrow": "Our Story",
+    "title": "About Shri Kalaivani Costumes",
+    "lead": "Shri Kalaivani Costumes is your trusted destination for exquisite Indian ethnic wear, devotional essentials, and timeless accessories.",
+    "story": {
+      "eyebrow": "Who we are",
+      "title": "Celebrating India’s",
+      "accent": "cultural heritage",
+      "first": "Shri Kalaivani Costumes is your trusted destination for exquisite Indian ethnic wear, devotional essentials, and timeless accessories. From elegant sarees, lehenga cholis, and salwar suits to sacred pooja garlands, deity frames, and traditional jewelry, we bring together the finest collection that celebrates India’s rich cultural heritage. Every piece in our store is thoughtfully curated to add grace, beauty, and spiritual significance to your life.",
+      "second": "We cater to women, families, and devotees who cherish tradition and seek authentic, high-quality products for everyday wear, festive celebrations, and sacred rituals. Whether you’re dressing up for a wedding, adorning your home temple, or simply expressing your personal style, our diverse range has something special for every occasion. Our customers are individuals who value craftsmanship, cultural roots, and meaningful adornment."
+    },
+    "promise": {
+      "eyebrow": "Our Promise",
+      "title": "More than just products",
+      "body": "At Shri Kalaivani Costumes, we believe that clothing and accessories are more than just products—they are expressions of identity, devotion, and joy. We are committed to offering authentic designs, superior quality, and exceptional service that honors the traditions we hold dear. With every purchase, we aim to bring you closer to the beauty and sanctity of Indian culture.",
+      "designs": {
+        "title": "Authentic Designs",
+        "body": "Thoughtfully curated pieces rooted in India’s rich cultural heritage."
+      },
+      "quality": {
+        "title": "Superior Quality",
+        "body": "Craftsmanship for everyday wear, festive celebrations and sacred rituals."
+      },
+      "service": {
+        "title": "Exceptional Service",
+        "body": "Service that honours the traditions we hold dear, with every purchase."
+      }
+    },
+    "visit": {
+      "title": "Visit Our Store",
+      "lead": "Come see the collection in person.",
+      "name": "Shri Kalaivani Costumes",
+      "whatsapp": "Chat on WhatsApp"
+    },
+    "closing": "Shri Kalaivani Costumes — Where Tradition Meets Timeless Elegance."
   },
   "contact": {
     "title": "Get in touch",
