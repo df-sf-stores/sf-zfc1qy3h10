@@ -81,9 +81,9 @@ const ProductRail = ({ title, action, products }: { title: string; action: React
 }
 
 /** The deal collection's products under a centred heading, with a "view all" pill. */
-const Deals = () => {
+const Deals = ({ exists }: { exists: boolean }) => {
   const { t } = useStorefront()
-  const { items } = useListing({ collection: collections.deals })
+  const { items } = useListing({ collection: collections.deals }, exists)
   if (!items.length) return null
   return (
     <section className={styles.section}>
@@ -111,6 +111,7 @@ export const HomePage = () => {
   const { collections: all, status } = useCollections({ first: 50 })
   const categories = all.filter((c) => !slugOf(c).startsWith(bannerPrefix))
   const imageOf = (slug: string) => all.find((c) => slugOf(c) === slug)?.image ?? null
+  const has = (slug: string) => all.some((c) => slugOf(c) === slug)
   const newest = useProducts({ sort: 'newest', first: 8 })
   const primary = categories[0] ? slugOf(categories[0]) : null
   const featured = useListing({ collection: primary }, primary !== null)
@@ -181,9 +182,10 @@ export const HomePage = () => {
           </ul>
         </section>
       ) : null}
-      <Deals />
+      <Deals exists={has(collections.deals)} />
       <Spotlight
         collection={collections.jewellery}
+        exists={has(collections.jewellery)}
         picture={art.jewellery}
         image={imageOf(collections.jewellery)}
         eyebrow={t('home.spotlight.jewellery.eyebrow')}
@@ -195,6 +197,7 @@ export const HomePage = () => {
       <ProductRail title={t('home.featured')} action={viewAll} products={featured} />
       <Spotlight
         collection={collections.accessories}
+        exists={has(collections.accessories)}
         picture={art.accessories}
         image={imageOf(collections.accessories)}
         eyebrow={t('home.spotlight.accessories.eyebrow')}
@@ -204,6 +207,7 @@ export const HomePage = () => {
       />
       <Spotlight
         collection={collections.ghungroo}
+        exists={has(collections.ghungroo)}
         picture={art.ghungroo}
         image={imageOf(collections.ghungroo)}
         eyebrow={t('home.spotlight.ghungroo.eyebrow')}

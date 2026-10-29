@@ -99,6 +99,17 @@
   grid-template-columns: minmax(0, 1fr);
 }
 
+/* Names the product grid for screen readers, so card names follow a heading level in order. */
+.hiddenHeading {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 .results {
   display: flex;
   min-width: 0;

@@ -9,6 +9,7 @@
     "view": "View details"
   },
   "listing": {
+    "heading": "Products",
     "showing": "{count, plural, one {Showing # product} other {Showing # products}}",
     "filters": "Filters",
     "filtersShown": "Hide filters",

@@ -7,6 +7,8 @@ import styles from '../styles/home.module.css'
 
 type SpotlightProps = {
   collection: string
+  /** Whether the store has this collection; its products are fetched only when it does. */
+  exists: boolean
   /** The class that paints the banner's category photo. */
   picture: string | undefined
   /** The category's own picture, painted over the placeholder once the collection has one. */
@@ -23,8 +25,8 @@ type SpotlightProps = {
  * A category banner beside four of its products, between two temple-border bands.
  * Hidden until the collection has products, so an empty or missing collection leaves no gap.
  */
-export const Spotlight = ({ collection, picture, image, eyebrow, title, body, cta, end = false }: SpotlightProps) => {
-  const { items } = useListing({ collection })
+export const Spotlight = ({ collection, exists, picture, image, eyebrow, title, body, cta, end = false }: SpotlightProps) => {
+  const { items } = useListing({ collection }, exists)
   if (!items.length) return null
   const href = `/collections/${collection}/`
   return (

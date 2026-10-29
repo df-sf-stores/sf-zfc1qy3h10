@@ -12,6 +12,7 @@ export const ListingResults = ({ listing }: { listing: Listing }) => {
     <div className={listing.facets.length ? styles.listingFiltered : styles.listing}>
       <FilterPanel listing={listing} />
       <div className={styles.results}>
+        <h2 className={styles.hiddenHeading}>{t('shop.listing.heading')}</h2>
         {listing.status === 'ready' ? (
           <ListingBar listing={listing} />
         ) : null}
