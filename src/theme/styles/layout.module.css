@@ -101,7 +101,6 @@
   background: var(--bg);
   color: var(--muted);
   font-size: 14px;
-  text-decoration: none;
 }
 
 .search label {
@@ -241,8 +240,11 @@
   color: var(--muted);
 }
 
+/* Not display: none, so screen readers still announce "No products match" when the status fills. */
 .search p:empty {
-  display: none;
+  padding: 0;
+  border: 0;
+  box-shadow: none;
 }
 
 .tools {

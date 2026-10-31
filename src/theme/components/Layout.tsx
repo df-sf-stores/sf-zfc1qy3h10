@@ -4,6 +4,9 @@ import { Menu } from './interactive/Menu'
 import { NavItem } from './interactive/NavItem'
 import styles from '../styles/layout.module.css'
 
+// The theme rules allow no URL encoding, so the characters that would break the query are dropped instead.
+const searchFor = (words: string) => navigate(`/search/?q=${words.replace(/[&+%#]/g, ' ').trim()}`)
+
 export const Layout = ({ children }: { children: ReactNode }) => {
   const { store, t, mode, poweredBy } = useStorefront()
   const menu = useMenu()
@@ -17,7 +20,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
           <Link href="/" className={styles.brand}>
             {store.name}
           </Link>
-          <SearchField label={t('common.tools.search')} placeholder={t('common.tools.searchPrompt')} button={t('common.tools.search')} value="" onSearch={(words) => navigate(`/search/?q=${words.replace(/[&+%#]/g, ' ').trim()}`)} suggest={4} className={styles.search} />
+          <SearchField label={t('common.tools.search')} placeholder={t('common.tools.searchPrompt')} button={t('common.tools.search')} value="" onSearch={searchFor} suggest={4} className={styles.search} />
           <div className={styles.tools}>
             <Link href="/account/" className={styles.account}>
               <svg className={styles.icon} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
