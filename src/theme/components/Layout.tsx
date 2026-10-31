@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { ConsentBanner, ConsentSettingsButton, Link, PoweredBy, PreviewBanner, useCart, useMenu, useStorefront } from '@dripfunnel/storefront-core/theme'
+import { ConsentBanner, ConsentSettingsButton, Link, navigate, PoweredBy, PreviewBanner, SearchField, useCart, useMenu, useStorefront } from '@dripfunnel/storefront-core/theme'
 import { Menu } from './interactive/Menu'
 import { NavItem } from './interactive/NavItem'
 import styles from '../styles/layout.module.css'
@@ -17,15 +17,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
           <Link href="/" className={styles.brand}>
             {store.name}
           </Link>
-          <Link href="/search/" className={styles.search}>
-            <span className={styles.searchText}>{t('common.tools.searchPrompt')}</span>
-            <span className={styles.searchIcon} aria-hidden="true">
-              <svg className={styles.icon} viewBox="0 0 24 24" focusable="false">
-                <circle cx="11" cy="11" r="6.5" />
-                <path d="M16 16l4.5 4.5" />
-              </svg>
-            </span>
-          </Link>
+          <SearchField label={t('common.tools.search')} placeholder={t('common.tools.searchPrompt')} button={t('common.tools.search')} value="" onSearch={(words) => navigate(`/search/?q=${words.replace(/[&+%#]/g, ' ').trim()}`)} suggest={4} className={styles.search} />
           <div className={styles.tools}>
             <Link href="/account/" className={styles.account}>
               <svg className={styles.icon} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
