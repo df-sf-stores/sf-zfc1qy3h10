@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react'
-import { ConsentBanner, ConsentSettingsButton, Link, navigate, PoweredBy, PreviewBanner, SearchField, useCart, useMenu, useStorefront } from '@dripfunnel/storefront-core/theme'
+import { ConsentBanner, ConsentSettingsButton, Link, navigate, PoweredBy, PreviewBanner, SearchField, useCart, useCollections, useMenu, useStorefront } from '@dripfunnel/storefront-core/theme'
 import { Menu } from './interactive/Menu'
-import { NavItem } from './interactive/NavItem'
 import styles from '../styles/layout.module.css'
 
 // The theme rules allow no URL encoding, so the characters that would break the query are dropped instead.
@@ -10,6 +9,16 @@ const searchFor = (words: string) => navigate(`/search/?q=${words.replace(/[&+%#
 export const Layout = ({ children }: { children: ReactNode }) => {
   const { store, t, mode, poweredBy } = useStorefront()
   const menu = useMenu()
+  // `first: 20` matches the home page's request, so both share one answer.
+  const { collections: fetched, status } = useCollections({ first: 20 })
+  // The store's four collections, drawn at once; the fetched list replaces them when it arrives, so a new one still shows.
+  const shelf = [
+    { id: 'costumes', name: t('common.nav.costumes'), href: '/collections/costumes/' },
+    { id: 'accessories', name: t('common.nav.accessories'), href: '/collections/accessories/' },
+    { id: 'jewellery', name: t('common.nav.jewellery'), href: '/collections/jewellery/' },
+    { id: 'ghungroo', name: t('common.nav.ghungroo'), href: '/collections/ghungroo/' },
+  ]
+  const collections = status === 'ready' && fetched.length ? fetched : shelf
   const { count } = useCart()
   const whatsapp = store.social.find((s) => s.network === 'whatsapp')
   return (
@@ -52,13 +61,14 @@ export const Layout = ({ children }: { children: ReactNode }) => {
               <Link href="/" className={styles.navLink}>
                 {t('common.nav.home')}
               </Link>
-              {menu.items.length ? (
-                menu.items.map((item) => <NavItem key={item.id} item={item} />)
-              ) : (
-                <Link href="/collections/all/" className={styles.navLink}>
-                  {t('common.nav.shop')}
+              <Link href="/collections/all/" className={styles.navLink}>
+                {t('common.nav.shopAll')}
+              </Link>
+              {collections.map((c) => (
+                <Link key={c.id} href={c.href} className={styles.navLink}>
+                  {c.name}
                 </Link>
-              )}
+              ))}
               <Link href="/about/" className={styles.navLink}>
                 {t('common.nav.about')}
               </Link>
@@ -67,17 +77,20 @@ export const Layout = ({ children }: { children: ReactNode }) => {
               </Link>
             </nav>
           </Menu>
-          {menu.items.length ? (
-            <ul className={styles.chips}>
-              {menu.items.map((item) => (
-                <li key={item.id}>
-                  <Link href={item.href} className={styles.chip}>
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          ) : null}
+          <ul className={styles.chips}>
+            <li>
+              <Link href="/collections/all/" className={styles.chip}>
+                {t('common.nav.shopAll')}
+              </Link>
+            </li>
+            {collections.map((c) => (
+              <li key={c.id}>
+                <Link href={c.href} className={styles.chip}>
+                  {c.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
       <main className={styles.main}>{children}</main>

@@ -17,10 +17,7 @@ const collections = {
   ghungroo: 'ghungroo',
 }
 
-/**
- * Until the store has a media library, each hero banner is the image of a collection kept for it.
- * Collections whose slug starts with this prefix carry artwork only and stay out of every list.
- */
+/** Collections whose slug starts with this prefix once carried the hero's artwork; they stay out of every list. */
 const bannerPrefix = 'banner-'
 
 /** A category's painted photo, for collections the catalogue gives no picture of their own. */
@@ -128,12 +125,12 @@ export const HomePage = () => {
   )
   return (
     <Layout>
-      <h1 className={styles.pageTitle}>{t('home.title')}</h1>
+      <h1 className={styles.hidden}>{t('home.title')}</h1>
       <HeroCarousel
         slides={[
-          { key: 'costume', art: art.bannerCostume, image: imageOf('banner-costume'), href: bannerHref(categories, ['bharatnatyam-dress', 'costume']), label: t('home.hero.costume') },
-          { key: 'ghungroo', art: art.bannerGhungroo, image: imageOf('banner-ghungroo'), href: bannerHref(categories, ['5-line', 'ghungroo']), label: t('home.hero.ghungroo') },
-          { key: 'jada', art: art.bannerJada, image: imageOf('banner-jada'), href: bannerHref(categories, ['ornament-set', 'accessor']), label: t('home.hero.jada') },
+          { key: 'costume', art: art.bannerCostume, asset: t('home.hero.image.costume'), href: bannerHref(categories, ['bharatnatyam-dress', 'costume']), label: t('home.hero.costume') },
+          { key: 'ghungroo', art: art.bannerGhungroo, asset: t('home.hero.image.ghungroo'), href: bannerHref(categories, ['5-line', 'ghungroo']), label: t('home.hero.ghungroo') },
+          { key: 'jada', art: art.bannerJada, asset: t('home.hero.image.jada'), href: bannerHref(categories, ['ornament-set', 'accessor']), label: t('home.hero.jada') },
         ]}
         labels={{ region: t('home.hero.region'), role: t('home.hero.role'), previous: t('home.hero.previous'), next: t('home.hero.next'), goTo: (n) => t('home.hero.goTo', { n }) }}
       />

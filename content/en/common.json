@@ -5,6 +5,11 @@
     "submenu": "Submenu: {item}",
     "home": "Home",
     "shop": "Shop",
+    "shopAll": "Shop all",
+    "costumes": "Costumes",
+    "accessories": "Accessories",
+    "jewellery": "Jewellery",
+    "ghungroo": "Ghungroo",
     "about": "About",
     "contact": "Contact"
   },

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { Image, Link, useReducedMotion, type Photo } from '@dripfunnel/storefront-core/theme'
+import { Link, MerchantImage, useReducedMotion } from '@dripfunnel/storefront-core/theme'
 import { cx } from '../cx'
 import art from '../../styles/art.module.css'
 import styles from '../../styles/hero.module.css'
@@ -14,8 +14,8 @@ export type HeroSlide = {
   href: string
   /** What the artwork says, for screen readers: the banner's words are part of the picture. */
   label: string
-  /** The banner picture; until it exists, the `art` class paints a gradient in its place. */
-  image: Photo | null
+  /** The banner's Storefront › Assets id from content; `none` leaves the `art` gradient in its place. */
+  asset: string
   /** The class that paints this slide's placeholder artwork. */
   art: string | undefined
 }
@@ -60,7 +60,7 @@ export const HeroCarousel = ({ slides, labels }: { slides: HeroSlide[]; labels: 
         {slides.map((slide, index) => (
           <div key={slide.key} className={cx(styles.slide, place(index), reduced && styles.still)}>
             <Link href={slide.href} className={cx(styles.slideLink, art.art, slide.art)}>
-              {slide.image ? <Image image={slide.image} alt="" ratio={16 / 9} sizes="100vw" className={styles.slideImage} /> : null}
+              <MerchantImage asset={slide.asset} alt="" ratio={16 / 9} sizes="100vw" className={styles.slideImage} />
               <span className={styles.hidden}>{slide.label}</span>
             </Link>
           </div>
