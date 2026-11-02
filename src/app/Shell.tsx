@@ -2,7 +2,7 @@
 
 import { createI18n, createShopClient, loadStore, storedShopState, StorefrontProvider, type Catalogue, type ShopStoreSettings } from '@dripfunnel/storefront-core'
 import { useEffect, useState, type ReactNode } from 'react'
-import { storeConfig } from '../../store.config'
+import { storeConfig } from '../../store.config'  
 
 const client = createShopClient({ endpoint: storeConfig.shopApi, state: storedShopState })
 
