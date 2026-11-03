@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { ConsentBanner, ConsentSettingsButton, Link, navigate, PoweredBy, PreviewBanner, SearchField, StoreLogo, useCart, useCollections, useMenu, useStorefront } from '@dripfunnel/storefront-core/theme'
+import { ConsentBanner, ConsentSettingsButton, Link, navigate, PoweredBy, PreviewBanner, SearchField, useCart, useCollections, useMenu, useStorefront } from '@dripfunnel/storefront-core/theme'
 import { Menu } from './interactive/Menu'
 import styles from '../styles/layout.module.css'
 
@@ -27,7 +27,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
       <header className={styles.header}>
         <div className={styles.bar}>
           <Link href="/" className={styles.brand}>
-            <StoreLogo className={styles.logo} />
+            {store.name}
           </Link>
           <SearchField label={t('common.tools.search')} placeholder={t('common.tools.searchPrompt')} button={t('common.tools.search')} value="" onSearch={searchFor} suggest={4} className={styles.search} />
           <div className={styles.tools}>
@@ -97,9 +97,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
       <footer className={styles.footer}>
         <div className={styles.columns}>
           <div className={styles.about}>
-            <p className={styles.footerBrand}>
-              <StoreLogo className={styles.logo} />
-            </p>
+            <p className={styles.footerBrand}>{store.name}</p>
             {store.tagline ? <p className={styles.tagline}>{store.tagline}</p> : null}
             <p className={styles.note}>{store.description || t('common.footer.note')}</p>
             {store.social.length ? (

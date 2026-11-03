@@ -87,15 +87,6 @@
   white-space: nowrap;
 }
 
-.logo {
-  display: block;
-  width: auto;
-  max-width: 100%;
-  height: 40px;
-  object-fit: contain;
-  object-position: left center;
-}
-
 .search {
   position: relative;
   display: flex;
