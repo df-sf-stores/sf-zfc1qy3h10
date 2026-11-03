@@ -97,7 +97,9 @@ export const Layout = ({ children }: { children: ReactNode }) => {
       <footer className={styles.footer}>
         <div className={styles.columns}>
           <div className={styles.about}>
-            <p className={styles.footerBrand}>{store.name}</p>
+            <p className={styles.footerBrand}>
+              <StoreLogo className={styles.logo} />
+            </p>
             {store.tagline ? <p className={styles.tagline}>{store.tagline}</p> : null}
             <p className={styles.note}>{store.description || t('common.footer.note')}</p>
             {store.social.length ? (
