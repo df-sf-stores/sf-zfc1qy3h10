@@ -33,32 +33,6 @@
   color: var(--ink);
 }
 
-.tabs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4px;
-  padding: 4px;
-  border-radius: var(--button-radius);
-  background: var(--soft);
-}
-
-.tab {
-  min-height: 44px;
-  border: 0;
-  border-radius: var(--button-radius);
-  background: transparent;
-  color: var(--ink-soft);
-  font: inherit;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.tabOn {
-  background: var(--surface);
-  color: var(--ink);
-}
-
-.tab:focus-visible,
 .link:focus-visible,
 .navItem:focus-visible {
   outline: 2px solid var(--focus);
@@ -104,12 +78,6 @@
   background: var(--surface);
   color: var(--ink);
   font: inherit;
-}
-
-.phone {
-  display: grid;
-  grid-template-columns: 6.5rem minmax(0, 1fr);
-  gap: 8px;
 }
 
 .field input[aria-invalid='true'] {
