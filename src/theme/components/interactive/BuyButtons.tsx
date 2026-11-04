@@ -14,6 +14,7 @@ const emailLike = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 export const BuyButtons = ({ page }: { page: ProductPage }) => {
   const { t } = useStorefront()
   const [note, setNote] = useState<'added' | 'failed' | null>(null)
+  const [addedId, setAddedId] = useState<string | null>(null)
   const [gift, setGift] = useState<GiftRecipient>({ recipientName: '', recipientEmail: '', sendOn: '', message: '' })
   const version = page.version
   const kind = page.product?.kind
@@ -23,6 +24,7 @@ export const BuyButtons = ({ page }: { page: ProductPage }) => {
   const set = (patch: Partial<GiftRecipient>) => setGift({ ...gift, ...patch })
   const why = useId()
   const waitsForRecipient = isGift && !giftReady
+  const inCart = !isGift && version !== null && addedId === version.id
   return (
     <div className={styles.buy}>
       {kind?.kind === 'digital' ? (
@@ -49,9 +51,25 @@ export const BuyButtons = ({ page }: { page: ProductPage }) => {
           {t('shop.product.gift.needed')}
         </p>
       ) : null}
-      <AddToCart versionId={version?.id ?? null} disabled={!buyable} gift={isGift ? gift : null} describedBy={waitsForRecipient ? why : undefined} className={shop.primary} onDone={(added) => setNote(added ? 'added' : 'failed')}>
-        {isGift ? t('shop.product.gift.add') : t('shop.product.add')}
-      </AddToCart>
+      {inCart ? (
+        <Link href="/cart/" className={shop.primary}>
+          {t('shop.product.goToCart')}
+        </Link>
+      ) : (
+        <AddToCart
+          versionId={version?.id ?? null}
+          disabled={!buyable}
+          gift={isGift ? gift : null}
+          describedBy={waitsForRecipient ? why : undefined}
+          className={shop.primary}
+          onDone={(added) => {
+            setNote(added ? 'added' : 'failed')
+            if (added) setAddedId(version?.id ?? null)
+          }}
+        >
+          {isGift ? t('shop.product.gift.add') : t('shop.product.add')}
+        </AddToCart>
+      )}
       {isGift ? null : (
         <BuyNow versionId={version?.id ?? null} disabled={!buyable} className={shop.secondary} onDone={(bought) => setNote(bought ? null : 'failed')}>
           {t('shop.product.buyNow')}
@@ -59,12 +77,7 @@ export const BuyButtons = ({ page }: { page: ProductPage }) => {
       )}
       {note ? (
         <p className={styles.added} role="status">
-          {note === 'added' ? t('shop.product.added') : t('shop.product.addFailed')}{' '}
-          {note === 'added' ? (
-            <Link href="/cart/" className={styles.viewCart}>
-              {t('shop.product.viewCart')}
-            </Link>
-          ) : null}
+          {note === 'added' ? t('shop.product.added') : t('shop.product.addFailed')}
         </p>
       ) : null}
     </div>
