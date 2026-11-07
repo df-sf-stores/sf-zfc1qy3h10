@@ -9,9 +9,8 @@
     "lint": "eslint .",
     "check": "dripfunnel-check && tsc -p tsconfig.json"
   },
-  
   "dependencies": {
-    "@dripfunnel/storefront-core": "0.9.0",
+    "@dripfunnel/storefront-core": "0.11.0",
     "next": "^16.3.6",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"
