@@ -1,7 +1,8 @@
 /*
  * Placeholder artwork: a gradient in each picture's own colours, shown wherever its collection
- * has no image yet. Hero banners are Storefront › Assets files named by id below, so they load
- * with the stylesheet; category pictures come from each category collection's image.
+ * has no image yet. Hero banners are Storefront › Assets files drawn over these gradients by core's
+ * <MerchantImage> (their ids are in content/en/home.json); category pictures come from each
+ * category collection's image.
  */
 
 .art {
@@ -11,24 +12,18 @@
   background-size: cover;
 }
 
-/* Hero banners: the picture fits whole, and its gradient fills any band beside it. */
-
-.bannerCostume,
-.bannerGhungroo,
-.bannerJada {
-  background-size: contain, cover;
-}
+/* Hero banners: each one's colours, behind the picture and in any band beside it. */
 
 .bannerCostume {
-  background-image: url(cc21e978-0c90-41f4-ad48-8e6eb2a9020a), radial-gradient(circle at 70% 40%, #fff7e8 0, #f1dfbd 55%, #d9bb84 100%);
+  background-image: radial-gradient(circle at 70% 40%, #fff7e8 0, #f1dfbd 55%, #d9bb84 100%);
 }
 
 .bannerGhungroo {
-  background-image: url(23e71ede-9c49-4f7e-9fff-d60a58a079a7), radial-gradient(circle at 70% 40%, #7a3a1c 0, #3b1a0e 60%, #1e0d07 100%);
+  background-image: radial-gradient(circle at 70% 40%, #7a3a1c 0, #3b1a0e 60%, #1e0d07 100%);
 }
 
 .bannerJada {
-  background-image: url(e39ba45c-880d-498f-bef4-dec7cc38cfb2), radial-gradient(circle at 70% 40%, #fffaf0 0, #f3e6cc 55%, #dcc597 100%);
+  background-image: radial-gradient(circle at 70% 40%, #fffaf0 0, #f3e6cc 55%, #dcc597 100%);
 }
 
 /* Category photos */

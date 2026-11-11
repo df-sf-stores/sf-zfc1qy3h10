@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { Link, useReducedMotion } from '@dripfunnel/storefront-core/theme'
+import { Link, MerchantImage, useReducedMotion } from '@dripfunnel/storefront-core/theme'
 import { cx } from '../cx'
 import art from '../../styles/art.module.css'
 import styles from '../../styles/hero.module.css'
@@ -14,7 +14,9 @@ export type HeroSlide = {
   href: string
   /** What the artwork says, for screen readers: the banner's words are part of the picture. */
   label: string
-  /** The class that paints this slide's banner (art.module.css), over a gradient while it loads. */
+  /** The banner's Storefront › Assets id; core fetches its address, so it loads in local dev and on the live site alike. */
+  asset: string
+  /** The gradient in the banner's own colours (art.module.css), shown while it loads and in any band beside it. */
   art: string | undefined
 }
 
@@ -58,6 +60,7 @@ export const HeroCarousel = ({ slides, labels }: { slides: HeroSlide[]; labels: 
         {slides.map((slide, index) => (
           <div key={slide.key} className={cx(styles.slide, place(index), reduced && styles.still)}>
             <Link href={slide.href} className={cx(styles.slideLink, art.art, slide.art)}>
+              <MerchantImage asset={slide.asset} alt="" ratio={16 / 9} sizes="100vw" className={styles.slideImage} />
               <span className={styles.hidden}>{slide.label}</span>
             </Link>
           </div>

@@ -128,9 +128,9 @@ export const HomePage = () => {
       <h1 className={styles.hidden}>{t('home.title')}</h1>
       <HeroCarousel
         slides={[
-          { key: 'costume', art: art.bannerCostume, href: bannerHref(categories, ['bharatnatyam-dress', 'costume']), label: t('home.hero.costume') },
-          { key: 'ghungroo', art: art.bannerGhungroo, href: bannerHref(categories, ['5-line', 'ghungroo']), label: t('home.hero.ghungroo') },
-          { key: 'jada', art: art.bannerJada, href: bannerHref(categories, ['ornament-set', 'accessor']), label: t('home.hero.jada') },
+          { key: 'costume', asset: t('home.hero.images.costume'), art: art.bannerCostume, href: bannerHref(categories, ['bharatnatyam-dress', 'costume']), label: t('home.hero.costume') },
+          { key: 'ghungroo', asset: t('home.hero.images.ghungroo'), art: art.bannerGhungroo, href: bannerHref(categories, ['5-line', 'ghungroo']), label: t('home.hero.ghungroo') },
+          { key: 'jada', asset: t('home.hero.images.jada'), art: art.bannerJada, href: bannerHref(categories, ['ornament-set', 'accessor']), label: t('home.hero.jada') },
         ]}
         labels={{ region: t('home.hero.region'), role: t('home.hero.role'), previous: t('home.hero.previous'), next: t('home.hero.next'), goTo: (n) => t('home.hero.goTo', { n }) }}
       />
