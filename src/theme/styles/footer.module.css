@@ -537,9 +537,42 @@
   color: var(--footer-ink);
 }
 
+/* "Powered by" and, after a thin rule, the white DripFunnel logo linking to its site. */
+.poweredBlock {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 14px;
+  border-left: 1px solid var(--footer-line);
+}
+
 .powered {
   display: block;
-  --df-sealed-muted: var(--footer-muted);
+  --df-sealed-color: var(--footer-ink);
+  --df-sealed-muted: var(--footer-ink);
+}
+
+.poweredMark {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: opacity 0.2s ease;
+}
+
+.poweredMark:hover {
+  opacity: 0.85;
+}
+
+.poweredMark:focus-visible {
+  outline: 2px solid var(--footer-gold);
+  outline-offset: 2px;
 }
 
 .hidden {

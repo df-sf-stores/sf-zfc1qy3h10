@@ -103,6 +103,8 @@ export const Footer = () => {
     tiktok: t('common.social.tiktok'),
   }
   const place = [store.address?.street, store.address?.city, store.address?.region, store.address?.postal].filter(Boolean).join(', ')
+  // The copyright line names the store's town and state, as in "© 2026 SK Classical, Bangalore, Karnataka".
+  const town = [store.address?.city, store.address?.region].filter(Boolean).join(', ')
   const payments: { id: PaymentId; name: string }[] = [
     { id: 'phonepe', name: t('common.payments.phonepe') },
     { id: 'gpay', name: t('common.payments.gpay') },
@@ -247,9 +249,24 @@ export const Footer = () => {
         </div>
       </div>
       <div className={styles.base}>
-        <p className={styles.copyright}>{t('common.footer.rights', { store: store.name })}</p>
+        <p className={styles.copyright}>{town ? t('common.footer.rightsAt', { store: store.name, place: town }) : t('common.footer.rights', { store: store.name })}</p>
         <ConsentSettingsButton t={t} className={styles.cookies} />
-        <PoweredBy brand={poweredBy} t={t} className={styles.powered} />
+        {/*
+          The platform decides whether a store shows "Powered by" (core's sealed line, worded "Powered by" alone in
+          content/en/powered.json); where it does, the brand follows as a bold white wordmark, linking to DripFunnel's site.
+        */}
+        {poweredBy ? (
+          <div className={styles.poweredBlock}>
+            <PoweredBy brand={poweredBy} t={t} className={styles.powered} />
+            {poweredBy.toLowerCase() === 'dripfunnel' ? (
+              <Link href={t('common.footer.poweredUrl')} className={styles.poweredMark}>
+                {poweredBy}
+              </Link>
+            ) : (
+              <span className={styles.poweredMark}>{poweredBy}</span>
+            )}
+          </div>
+        ) : null}
       </div>
     </footer>
   )
