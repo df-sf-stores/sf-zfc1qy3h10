@@ -107,25 +107,29 @@ const PaymentMark = ({ id }: { id: PaymentId }) => {
       )
     case 'upi':
       return (
-        <span className={styles.upi}>
-          {t('common.payments.marks.upi')}
-          <TwoArrows />
+        <span className={styles.upiStack}>
+          <span className={styles.upi}>
+            {t('common.payments.marks.upi')}
+            <TwoArrows />
+          </span>
+          <span className={styles.upiTagline} />
         </span>
       )
     case 'rupay':
       return (
         <span className={styles.rupay}>
           {t('common.payments.marks.rupayRu')}
-          <span className={styles.rupayPay}>{t('common.payments.marks.rupayPay')}</span>
+          {t('common.payments.marks.rupayPay')}
           <TwoArrows />
         </span>
       )
     case 'mastercard':
       return (
-        <svg className={styles.mastercard} viewBox="0 0 38 24" aria-hidden="true" focusable="false">
-          <circle cx="14" cy="12" r="9" fill="#eb001b" />
-          <circle cx="24" cy="12" r="9" fill="#f79e1b" />
-          <path d="M19 4.4a9 9 0 010 15.2 9 9 0 010-15.2z" fill="#ff5f00" />
+        <svg className={styles.mastercard} viewBox="0 0 38 30" aria-hidden="true" focusable="false">
+          <circle cx="14" cy="11" r="9" fill="#eb001b" />
+          <circle cx="24" cy="11" r="9" fill="#f79e1b" />
+          <path d="M19 3.4a9 9 0 010 15.2 9 9 0 010-15.2z" fill="#ff5f00" />
+          <rect x="9" y="24.5" width="20" height="1.6" rx="0.8" fill="#6b6b6b" />
         </svg>
       )
     case 'visa':
@@ -285,7 +289,7 @@ export const Footer = () => {
           <p className={styles.hidden}>{t('common.payments.label')}</p>
           <ul className={styles.paymentList}>
             {payments.map((p) => (
-              <li key={p.id} className={styles.payment} title={p.name}>
+              <li key={p.id} className={p.id === 'mastercard' ? styles.paymentNarrow : styles.payment} title={p.name}>
                 <span aria-hidden="true" className={styles.paymentMark}>
                   <PaymentMark id={p.id} />
                 </span>

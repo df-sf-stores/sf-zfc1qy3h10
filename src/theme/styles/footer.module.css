@@ -419,21 +419,26 @@
   }
 }
 
-.payment {
+/* Payment cards as on the reference: flat white tiles sized to their mark, Mastercard's narrower. */
+.payment,
+.paymentNarrow {
   display: flex;
-  width: 68px;
-  height: 36px;
+  min-width: 64px;
+  height: 30px;
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
-  padding: 0 6px;
-  border: 1px solid rgb(255 255 255 / 60%);
-  border-radius: 6px;
+  padding: 0 12px;
+  border-radius: 4px;
   background: #fff;
-  box-shadow: 0 2px 6px rgb(0 0 0 / 25%);
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1;
   white-space: nowrap;
+}
+
+.paymentNarrow {
+  min-width: 42px;
+  padding: 0 6px;
 }
 
 .paymentMark {
@@ -447,13 +452,14 @@
   align-items: center;
   gap: 3px;
   color: #5f259f;
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 .phonepeIcon {
-  width: 14px;
-  height: 14px;
+  width: 13px;
+  height: 13px;
   flex: none;
 }
 
@@ -461,69 +467,81 @@
   display: inline-flex;
   align-items: center;
   gap: 3px;
-  color: #5f6368;
-  font-size: 14px;
-  font-weight: 600;
+  color: #3c4043;
+  font-size: 15px;
+  font-weight: 400;
 }
 
 .gpayIcon {
-  width: 15px;
-  height: 15px;
+  width: 14px;
+  height: 14px;
   flex: none;
 }
 
 .paytm {
-  color: #002e6e;
-  font-size: 16px;
-  font-weight: 800;
-  letter-spacing: -0.03em;
+  color: #20336b;
+  font-family: 'Arial Narrow', Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: -0.05em;
 }
 
 .paytmTm {
-  color: #00baf2;
+  color: #00b9f1;
+}
+
+.upiStack {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1px;
 }
 
 .upi {
   display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  color: #5b5b5b;
-  font-size: 15px;
+  align-items: flex-start;
+  gap: 1px;
+  color: #6d6e71;
+  font-size: 14px;
   font-style: italic;
   font-weight: 900;
+  letter-spacing: 0.06em;
+}
+
+.upiTagline {
+  display: block;
+  height: 1px;
+  border-radius: 1px;
+  background: #8a8b8e;
 }
 
 .rupay {
   display: inline-flex;
   align-items: center;
-  color: #1b3f8f;
-  font-size: 13.5px;
+  gap: 1px;
+  color: #1c3f94;
+  font-size: 13px;
   font-style: italic;
   font-weight: 900;
 }
 
-.rupayPay {
-  margin-right: 2px;
-  color: #f37021;
-}
-
 .arrows {
-  width: 9px;
-  height: 11px;
+  width: 7px;
+  height: 10px;
   flex: none;
 }
 
 .mastercard {
-  width: 36px;
+  width: 28px;
   height: 22px;
 }
 
 .visa {
-  color: #1a1f71;
+  color: #1434cb;
   font-size: 16px;
   font-style: italic;
   font-weight: 900;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.01em;
 }
 
 /* Base line: copyright, cookie settings and "Powered by". */
