@@ -17,14 +17,14 @@
 
 @media (min-width: 640px) {
   .footer {
-    padding: 0 32px 32px;
+    padding: 0 32px 12px;
   }
 }
 
 /* Equal breathing room on the left and right, growing with the screen. */
 @media (min-width: 1024px) {
   .footer {
-    padding: 0 56px 24px;
+    padding: 0 56px 8px;
   }
 }
 
@@ -511,8 +511,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 10px 16px;
-  margin-top: 24px;
-  padding-top: 16px;
+  margin-top: 16px;
+  padding-top: 8px;
   border-top: 1px solid var(--footer-line);
   color: var(--footer-muted);
   font-size: 12px;
@@ -529,7 +529,7 @@
 }
 
 .cookies::part(button) {
-  min-height: 40px;
+  min-height: 32px;
   padding: 0 14px;
   border: 1px solid var(--footer-line);
   border-radius: var(--button-radius);
@@ -559,7 +559,7 @@
 
 .poweredMark {
   display: inline-flex;
-  min-height: 44px;
+  min-height: 32px;
   align-items: center;
   border-radius: 4px;
   transition: opacity 0.2s ease;
@@ -569,7 +569,7 @@
 .dripLogo {
   display: block;
   width: auto;
-  height: 22px;
+  height: 18px;
 }
 
 .dripOrange {
