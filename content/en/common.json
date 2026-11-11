@@ -61,6 +61,7 @@
     "faq": "FAQs",
     "rights": "© 2026 {store}. All rights reserved.",
     "rightsAt": "© 2026 {store}, {place}. All rights reserved.",
-    "poweredUrl": "https://www.dripfunnel.com/in/"
+    "poweredUrl": "https://www.dripfunnel.com/in/",
+    "poweredLabel": "DripFunnel"
   }
 }

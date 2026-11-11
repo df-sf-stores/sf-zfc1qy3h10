@@ -557,13 +557,22 @@
   min-height: 44px;
   align-items: center;
   border-radius: 4px;
-  color: #fff;
-  font-size: 15px;
-  font-weight: 900;
-  letter-spacing: 0.06em;
-  text-decoration: none;
-  text-transform: uppercase;
   transition: opacity 0.2s ease;
+}
+
+/* DripFunnel's logo: about as tall as the line beside it, its colours those of the logo. */
+.dripLogo {
+  display: block;
+  width: auto;
+  height: 22px;
+}
+
+.dripOrange {
+  fill: #fc631c;
+}
+
+.dripWhite {
+  fill: #fff;
 }
 
 .poweredMark:hover {

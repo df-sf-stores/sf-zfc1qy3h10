@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { ConsentSettingsButton, Link, PoweredBy, StoreLogo, useStorefront } from '@dripfunnel/storefront-core/theme'
+import { DripFunnelLogo } from './DripFunnelLogo'
 import { cx } from './cx'
 import { FooterColumn } from './interactive/FooterColumn'
 import { PinIcon, StoreIcon, useNavItems } from './interactive/Header'
@@ -253,14 +254,14 @@ export const Footer = () => {
         <ConsentSettingsButton t={t} className={styles.cookies} />
         {/*
           The platform decides whether a store shows "Powered by" (core's sealed line, worded "Powered by" alone in
-          content/en/powered.json); where it does, the brand follows as a bold white wordmark, linking to DripFunnel's site.
+          content/en/powered.json); where it does, DripFunnel's logo follows, linking to its site.
         */}
         {poweredBy ? (
           <div className={styles.poweredBlock}>
             <PoweredBy brand={poweredBy} t={t} className={styles.powered} />
             {poweredBy.toLowerCase() === 'dripfunnel' ? (
-              <Link href={t('common.footer.poweredUrl')} className={styles.poweredMark}>
-                {poweredBy}
+              <Link href={t('common.footer.poweredUrl')} className={styles.poweredMark} aria-label={t('common.footer.poweredLabel')}>
+                <DripFunnelLogo />
               </Link>
             ) : (
               <span className={styles.poweredMark}>{poweredBy}</span>
