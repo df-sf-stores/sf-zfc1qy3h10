@@ -15,7 +15,9 @@
   --gold-text: #8a5f1a;
   --deep: #4a0f16;
   --danger: #9a3412;
-  --focus: #00519f;
+  /* Gold focus rings, dark enough to show on ivory (3:1). */
+  --focus: #8a5f1a;
+  --ring: #b68446;
   --radius: 8px;
   --button-radius: 6px;
   --heading-font: 'Cormorant Garamond', georgia, serif;
@@ -23,7 +25,7 @@
   --brand-weight: 700;
   --heading-case: none;
   --heading-spacing: 0;
-  --body-font: system-ui, -apple-system, 'Segoe UI', roboto, sans-serif;
+  --body-font: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --header-bg: #791824;
   --header-ink: #fcf8f0;
   --header-hover: rgb(255 255 255 / 12%);
@@ -40,6 +42,7 @@
   --df-sealed-surface: var(--surface);
   --df-sealed-radius: var(--radius);
 
+  position: relative;
   display: flex;
   min-height: 100vh;
   flex-direction: column;
@@ -54,36 +57,6 @@
 
 .preview {
   display: block;
-}
-
-/* Top bar: brand, search and tools on maroon. */
-
-.header {
-  background: var(--header-bg);
-  color: var(--header-ink);
-}
-
-.bar {
-  display: grid;
-  box-sizing: border-box;
-  width: min(100%, 1240px);
-  align-items: center;
-  gap: 8px 12px;
-  grid-template-columns: minmax(0, 1fr) auto;
-  margin-inline: auto;
-  padding: 8px 12px;
-}
-
-@media (min-width: 640px) {
-  .bar {
-    padding: 10px 16px;
-  }
-}
-
-@media (min-width: 1200px) {
-  .bar {
-    padding: 10px 32px;
-  }
 }
 
 .brand {
@@ -126,567 +99,11 @@
   }
 }
 
-.search {
-  position: relative;
-  display: none;
-  min-height: 44px;
-  box-sizing: border-box;
-  align-items: center;
-  gap: 12px;
-  grid-column: 1 / -1;
-  order: 1;
-  padding: 4px 4px 4px 18px;
-  border-radius: 999px;
-  background: var(--bg);
-  color: var(--muted);
-  font-size: 14px;
-}
-
-@media (min-width: 900px) {
-  .search {
-    display: flex;
-  }
-}
-
-.search label {
-  position: absolute;
-  overflow: hidden;
-  width: 1px;
-  height: 1px;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-
-.search input {
-  min-width: 0;
-  flex: 1;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--ink);
-  font: inherit;
-  outline: none;
-}
-
-.search input::placeholder {
-  color: var(--muted);
-}
-
-/* Core's button carries its word as text; the word is hidden and a magnifier is drawn in its place. */
-.search button {
-  position: relative;
-  width: 36px;
-  height: 36px;
-  flex-shrink: 0;
-  padding: 0;
-  border: 0;
-  border-radius: 999px;
-  background: var(--gold);
-  color: transparent;
-  font-size: 0;
-  cursor: pointer;
-}
-
-.search button::before {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  width: 11px;
-  height: 11px;
-  box-sizing: border-box;
-  border: 2px solid var(--gold-ink);
-  border-radius: 50%;
-  content: '';
-}
-
-.search button::after {
-  position: absolute;
-  top: 22px;
-  left: 20px;
-  width: 6px;
-  height: 2px;
-  background: var(--gold-ink);
-  content: '';
-  transform: rotate(45deg);
-  transform-origin: 0 50%;
-}
-
-.search ul {
-  position: absolute;
-  z-index: 30;
-  top: calc(100% + 8px);
-  right: 0;
-  left: 0;
-  margin: 0;
-  padding: 6px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--surface);
-  box-shadow: 0 16px 40px rgb(42 10 14 / 18%);
-  list-style: none;
-}
-
-.search li {
-  border-radius: 6px;
-  color: var(--ink);
-  cursor: pointer;
-}
-
-.search li:hover,
-.search li[aria-selected='true'] {
-  background: var(--soft);
-}
-
-.search li:last-child {
-  padding: 10px 12px;
-  border-top: 1px solid var(--line);
-  border-radius: 0 0 6px 6px;
-  color: var(--accent);
-  font-weight: 600;
-}
-
-.search li a {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 8px 12px;
-  color: var(--ink);
-  text-decoration: none;
-}
-
-.search li img {
-  width: 44px;
-  height: 44px;
-  flex-shrink: 0;
-  border-radius: 6px;
-  background: var(--soft);
-  object-fit: cover;
-}
-
-.search li span {
-  flex: 1;
-  font-family: var(--heading-font);
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.search p {
-  position: absolute;
-  z-index: 30;
-  top: calc(100% + 8px);
-  right: 0;
-  left: 0;
-  margin: 0;
-  padding: 14px 16px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--surface);
-  box-shadow: 0 16px 40px rgb(42 10 14 / 18%);
-  color: var(--muted);
-}
-
-/* Not display: none, so screen readers still announce "No products match" when the status fills. */
-.search p:empty {
-  padding: 0;
-  border: 0;
-  box-shadow: none;
-}
-
-.tools {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-}
-
-@media (min-width: 900px) {
-  .tools {
-    gap: 4px;
-  }
-}
-
-.account,
-.tool {
-  display: inline-flex;
-  min-width: 40px;
-  height: 40px;
-  box-sizing: border-box;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  border-radius: var(--button-radius);
-  color: var(--header-ink);
-  font-size: 13px;
-  font-weight: 600;
-  text-decoration: none;
-  padding: 0 4px;
-}
-
-@media (min-width: 900px) {
-  .account,
-  .tool {
-    min-width: 44px;
-    height: 44px;
-    gap: 8px;
-    padding: 0;
-    font-size: 14px;
-  }
-}
-
-.account:hover,
-.tool:hover {
-  background: var(--header-hover);
-}
-
-.accountLabel {
-  position: absolute;
-  overflow: hidden;
-  width: 1px;
-  height: 1px;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-
-.divider {
-  display: none;
-  width: 1px;
-  height: 24px;
-  background: rgb(255 255 255 / 25%);
-}
-
-.tool:has(.count) {
-  position: relative;
-}
-
-.count {
-  position: absolute;
-  top: 2px;
-  right: 0;
-  display: inline-flex;
-  min-width: 18px;
-  height: 18px;
-  box-sizing: border-box;
-  align-items: center;
-  justify-content: center;
-  padding: 0 5px;
-  border-radius: 999px;
-  background: var(--gold);
-  color: var(--gold-ink);
-  font-size: 11px;
-  font-weight: 700;
-  line-height: 1;
-}
-
-.icon {
-  width: 18px;
-  height: 18px;
-  fill: none;
-  stroke: currentcolor;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 1.6;
-}
-
-@media (min-width: 900px) {
-  .icon {
-    width: 22px;
-    height: 22px;
-  }
-}
-
-.hidden {
-  position: absolute;
-  overflow: hidden;
-  width: 1px;
-  height: 1px;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-
-/* Nav bar: cream, sticky, uppercase links. */
-
-.navBar {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  border-bottom: 1px solid rgb(210 162 73 / 30%);
-  background: var(--nav-bg);
-  backdrop-filter: blur(8px);
-  color: var(--ink);
-}
-
-.navInner {
-  display: flex;
-  box-sizing: border-box;
-  width: min(100%, 1240px);
-  min-height: 44px;
-  flex-wrap: wrap;
-  align-items: center;
-  margin-inline: auto;
-  padding-inline: 12px;
-}
-
-@media (min-width: 640px) {
-  .navInner {
-    min-height: 48px;
-    padding-inline: 16px;
-  }
-}
-
-@media (min-width: 900px) {
-  .navInner {
-    min-height: 52px;
-    padding-inline: 32px;
-  }
-}
-
-.nav {
-  display: flex;
-  flex-direction: column;
-  padding-block: 8px;
-}
-
-.navLink {
-  display: flex;
-  min-height: 44px;
-  align-items: center;
-  padding: 0 12px;
-  border-radius: var(--button-radius);
-  color: var(--ink);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-decoration: none;
-  text-transform: uppercase;
-}
-
-.navLink:hover {
-  color: var(--accent);
-}
-
-.navItem {
-  position: relative;
-}
-
-.subnav {
-  display: flex;
-  flex-direction: column;
-  padding-left: 16px;
-}
-
-.subLink {
-  display: flex;
-  min-height: 40px;
-  align-items: center;
-  padding: 0 12px;
-  border-radius: var(--button-radius);
-  color: var(--ink);
-  font-size: 14px;
-  text-decoration: none;
-}
-
-.subLink:hover {
-  background: var(--soft);
-  color: var(--accent);
-}
-
-.subToggle {
-  display: none;
-}
-
 .main {
   width: 100%;
   flex: 1;
 }
 
-/* Footer: deep maroon with gold headings. */
-
-.footer {
-  margin-top: 0;
-  padding: 32px 12px 16px;
-  background:
-    linear-gradient(90deg, transparent, var(--gold), transparent) top / 100% 2px no-repeat,
-    var(--footer-bg);
-  color: var(--footer-muted);
-  font-size: 13px;
-}
-
-@media (min-width: 640px) {
-  .footer {
-    padding: 40px 16px 20px;
-    font-size: 14px;
-  }
-}
-
-@media (min-width: 900px) {
-  .footer {
-    padding: 44px 32px 24px;
-  }
-}
-
-.columns {
-  display: grid;
-  box-sizing: border-box;
-  width: min(100%, 1208px);
-  gap: 24px 16px;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  margin-inline: auto;
-}
-
-@media (min-width: 640px) {
-  .columns {
-    gap: 32px 20px;
-  }
-}
-
-.about {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  gap: 8px;
-  grid-column: 1 / -1;
-}
-
-@media (min-width: 640px) {
-  .about {
-    gap: 10px;
-  }
-}
-
-.footerBrand {
-  margin: 0;
-  color: var(--footer-ink);
-  font-family: var(--heading-font);
-  font-size: 22px;
-  font-weight: var(--brand-weight);
-  line-height: 1.1;
-  overflow-wrap: anywhere;
-}
-
-@media (min-width: 640px) {
-  .footerBrand {
-    font-size: 24px;
-  }
-}
-
-@media (min-width: 900px) {
-  .footerBrand {
-    font-size: 28px;
-  }
-}
-
-.tagline {
-  margin: 0;
-  color: var(--gold);
-  font-size: 12px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-
-.note {
-  max-width: 36ch;
-  margin: 0;
-  overflow-wrap: anywhere;
-}
-
-.contact {
-  margin: 0 0 10px;
-  overflow-wrap: anywhere;
-}
-
-.social {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 8px;
-}
-
-.socialLink {
-  display: inline-flex;
-  min-height: 36px;
-  align-items: center;
-  padding: 0 14px;
-  border: 1px solid var(--gold);
-  border-radius: 999px;
-  color: var(--gold);
-  font-size: 13px;
-  text-decoration: none;
-  text-transform: capitalize;
-}
-
-.socialLink:hover {
-  background: var(--gold);
-  color: var(--gold-ink);
-}
-
-.links {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-}
-
-.heading {
-  margin: 0 0 10px;
-  color: var(--gold);
-  font-family: var(--heading-font);
-  font-size: 16px;
-  font-weight: var(--heading-weight);
-}
-
-@media (min-width: 640px) {
-  .heading {
-    margin: 0 0 12px;
-    font-size: 18px;
-  }
-}
-
-@media (min-width: 900px) {
-  .heading {
-    font-size: 19px;
-  }
-}
-
-.footerLink {
-  display: flex;
-  min-height: 32px;
-  align-items: center;
-  color: var(--footer-muted);
-  text-decoration: none;
-  font-size: 14px;
-}
-
-@media (min-width: 900px) {
-  .footerLink {
-    min-height: 34px;
-  }
-}
-
-.footerLink:hover {
-  color: var(--gold);
-}
-
-.base {
-  display: flex;
-  box-sizing: border-box;
-  width: min(100%, 1208px);
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  margin: 20px auto 0;
-  padding-top: 12px;
-  border-top: 1px solid var(--footer-line);
-  color: var(--footer-muted);
-  font-size: 11px;
-}
-
-@media (min-width: 640px) {
-  .base {
-    gap: 12px;
-    margin: 24px auto 0;
-    padding-top: 14px;
-    font-size: 12px;
-  }
-}
 
 .cookies {
   display: block;
@@ -711,70 +128,8 @@
   display: block;
 }
 
-.copyright {
-  margin: 0;
-  margin-right: auto;
-}
 
-/* Phones: the menu's top-level items as a sideways strip of chips beside the menu button. */
-.chips {
-  display: flex;
-  min-width: 0;
-  flex: 1;
-  gap: 4px;
-  margin: 0;
-  padding: 4px 2px;
-  list-style: none;
-  order: 2;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x proximity;
-  scrollbar-width: none;
-}
-
-@media (min-width: 640px) {
-  .chips {
-    gap: 6px;
-    padding: 6px 4px;
-  }
-}
-
-.chips li {
-  flex-shrink: 0;
-  scroll-snap-align: start;
-}
-
-.chip {
-  display: inline-flex;
-  height: 28px;
-  box-sizing: border-box;
-  align-items: center;
-  padding: 0 10px;
-  border: 1px solid rgb(210 162 73 / 40%);
-  border-radius: 999px;
-  background: rgb(252 250 244 / 60%);
-  color: var(--ink);
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-decoration: none;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-@media (min-width: 640px) {
-  .chip {
-    height: 32px;
-    padding: 0 12px;
-    font-size: 11px;
-    letter-spacing: 0.08em;
-  }
-}
-
-.chip:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
+/* "Chat with us": WhatsApp's green, bottom right on every page; its words show from tablets up. */
 
 .whatsapp {
   position: fixed;
@@ -782,198 +137,160 @@
   right: 12px;
   bottom: 12px;
   display: flex;
-  width: 48px;
-  height: 48px;
+  min-width: 52px;
+  height: 52px;
+  box-sizing: border-box;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   border-radius: 999px;
   background: #25d366;
   box-shadow:
     0 0 0 6px rgb(37 211 102 / 15%),
-    0 4px 16px rgb(0 0 0 / 20%);
+    0 6px 20px rgb(0 0 0 / 22%);
   color: #fff;
+  font-weight: 800;
+  text-decoration: none;
   transition: transform 0.3s ease;
 }
 
-@media (min-width: 640px) {
-  .whatsapp {
-    right: 16px;
-    bottom: 16px;
-    width: 52px;
-    height: 52px;
-    box-shadow:
-      0 0 0 7px rgb(37 211 102 / 15%),
-      0 6px 20px rgb(0 0 0 / 20%);
-  }
-}
-
-@media (min-width: 900px) {
+@media (min-width: 768px) {
   .whatsapp {
     right: 20px;
     bottom: 20px;
-    width: 56px;
-    height: 56px;
-    box-shadow:
-      0 0 0 8px rgb(37 211 102 / 15%),
-      0 8px 24px rgb(0 0 0 / 20%);
+    height: 54px;
+    padding: 0 22px 0 16px;
   }
 }
 
 .whatsapp:hover {
-  transform: scale(1.06);
+  transform: translateY(-2px);
 }
 
 .whatsappIcon {
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
+  flex: 0 0 auto;
   fill: currentcolor;
 }
 
-@media (min-width: 640px) {
-  .whatsappIcon {
-    width: 26px;
-    height: 26px;
-  }
+.whatsappLabel {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
-@media (min-width: 900px) {
-  .whatsappIcon {
-    width: 28px;
-    height: 28px;
-  }
-}
-
-.chip:focus-visible,
-.whatsapp:focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
-}
-
-.brand:focus-visible,
-.search:focus-within,
-.account:focus-visible,
-.tool:focus-visible {
-  outline: 2px solid var(--header-ink);
-  outline-offset: 2px;
-}
-
-.navLink:focus-visible,
-.subLink:focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
-}
-
-.footerLink:focus-visible,
-.socialLink:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: 2px;
-}
-
-@media (min-width: 900px) {
-  .bar {
-    min-height: 72px;
-    gap: 24px;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 560px) minmax(0, 1fr);
-    padding: 12px 32px;
-  }
-
-  .brand {
-    font-size: 28px;
-  }
-
-  .search {
-    grid-column: auto;
-    order: 0;
-  }
-
-  .tools {
-    justify-content: flex-end;
-  }
-
-  .account {
-    padding: 0 10px;
-  }
-
-  .accountLabel {
+@media (min-width: 768px) {
+  .whatsappLabel {
     position: static;
     width: auto;
     height: auto;
     clip-path: none;
+    color: #0b2e17;
+    font-size: 14px;
+  }
+}
+
+.brand:focus-visible,
+.whatsapp:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+/* Product pages on phones: once the buy buttons scroll away, a bar keeps the price and Add to cart in reach. */
+
+.buyBar {
+  position: fixed;
+  z-index: 35;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+  border-top: 1px solid rgb(210 162 73 / 45%);
+  background: rgb(252 250 244 / 96%);
+  box-shadow: 0 -10px 30px rgb(42 10 14 / 14%);
+  animation: rise 0.25s ease both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
   }
 
-  .divider {
-    display: block;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
+}
 
-  .navInner {
-    justify-content: center;
-    padding-inline: 32px;
-  }
-
-  .chips {
+@media (min-width: 768px) {
+  .buyBar {
     display: none;
   }
+}
 
-  .nav {
-    flex-direction: row;
-    gap: 4px;
-    padding-block: 0;
-  }
+/* The WhatsApp button moves up out of the bar's way. */
+.shell:has(.buyBar) .whatsapp {
+  bottom: 84px;
+}
 
-  .subnav {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 20;
-    display: none;
-    min-width: 200px;
-    padding: 8px;
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    background: var(--surface);
-    box-shadow: 0 8px 24px rgb(43 22 19 / 12%);
-  }
+.buyBarText {
+  min-width: 0;
+  flex: 1;
+}
 
-  .navItem {
-    display: flex;
-    align-items: center;
-  }
+.buyBarName {
+  overflow: hidden;
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--heading-font);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
-  .navItem .navLink {
-    padding-right: 2px;
-  }
+.buyBarPrice {
+  display: block;
+  margin: 2px 0 0;
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 700;
+}
 
-  .subToggle {
-    display: flex;
-    width: 24px;
-    height: 44px;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    border: 0;
-    background: none;
-    color: var(--ink);
-    cursor: pointer;
-  }
+.buyBarButton {
+  display: inline-flex;
+  min-height: 46px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  padding: 0 18px;
+  border: 0;
+  border-radius: var(--button-radius);
+  background: var(--accent);
+  color: var(--accent-ink);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
 
-  .subToggle .icon {
-    width: 14px;
-    height: 14px;
-  }
+.buyBarButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
-  .subnavOpen {
-    display: flex;
-  }
-
-  .footer {
-    padding: 56px 32px 24px;
-  }
-
-  .columns {
-    grid-template-columns: minmax(0, 1.4fr) repeat(4, minmax(0, 1fr));
-  }
-
-  .about {
-    grid-column: auto;
-  }
+.buyBarButton:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
 }

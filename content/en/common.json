@@ -2,14 +2,10 @@
   "nav": {
     "label": "Main",
     "menu": "Menu",
+    "close": "Close menu",
     "submenu": "Submenu: {item}",
-    "home": "Home",
-    "shop": "Shop",
     "shopAll": "Shop all",
-    "costumes": "Costumes",
-    "accessories": "Accessories",
-    "jewellery": "Jewellery",
-    "ghungroo": "Ghungroo",
+    "shopAllOf": "Shop all {item}",
     "about": "About",
     "contact": "Contact"
   },
@@ -18,23 +14,48 @@
     "searchPrompt": "Search products…",
     "account": "Account",
     "cart": "Cart",
-    "cartCount": "Cart, {count, plural, one {# item} other {# items}}"
+    "cartCount": "Cart, {count, plural, one {# item} other {# items}}",
+    "findStore": "Find Store"
+  },
+  "contact": {
+    "phone": "Phone (24x7)",
+    "email": "Email",
+    "address": "Visit us",
+    "whatsapp": "WhatsApp us",
+    "chat": "Chat with us"
+  },
+  "social": {
+    "facebook": "Facebook",
+    "instagram": "Instagram",
+    "youtube": "YouTube",
+    "x": "X",
+    "tiktok": "TikTok"
+  },
+  "payments": {
+    "label": "We accept",
+    "phonepe": "PhonePe",
+    "gpay": "Google Pay",
+    "paytm": "Paytm",
+    "upi": "UPI",
+    "rupay": "RuPay",
+    "mastercard": "Mastercard",
+    "visa": "Visa"
   },
   "footer": {
     "note": "Thank you for shopping with us.",
     "shop": "Shop",
-    "all": "Shop all",
-    "help": "Help",
-    "shipping": "Shipping",
-    "returns": "Returns",
-    "privacy": "Privacy",
-    "terms": "Terms",
-    "legal": "Legal",
-    "notice": "Legal notice",
-    "touch": "Get in touch",
-    "orders": "My orders",
+    "all": "Shop All",
+    "help": "Customer Care",
+    "account": "My Account",
+    "about": "About Us",
+    "shipping": "Shipping Policy",
+    "returns": "Return Policy",
+    "privacy": "Privacy Policy",
+    "terms": "Terms & Conditions",
+    "legal": "Policies",
+    "touch": "Get in Touch",
+    "orders": "My Orders",
     "faq": "FAQs",
-    "whatsapp": "Chat with us on WhatsApp",
     "rights": "© 2026 {store}. All rights reserved."
   }
 }

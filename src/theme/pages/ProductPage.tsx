@@ -5,7 +5,7 @@ import { Options } from '../components/interactive/Options'
 import { Retry } from '../components/interactive/Retry'
 import { Layout } from '../components/Layout'
 import { Notice } from '../components/Notice'
-import { ProductGrid } from '../components/ProductCard'
+import { isPriced, ProductGrid } from '../components/ProductCard'
 import shop from '../styles/shop.module.css'
 import styles from '../styles/product.module.css'
 
@@ -50,11 +50,13 @@ export const ProductPage = () => {
           <div className={styles.info}>
             {product.badges[0] ? <span className={styles.badge}>{product.badges[0].label}</span> : null}
             <h1 className={styles.title}>{product.name}</h1>
-            {page.price ? (
+            {page.price && isPriced(page.price) ? (
               <p className={styles.price}>
                 {page.from ? <span className={styles.from}>{t('shop.card.from')}</span> : null}
                 <Price money={page.price} compareAt={page.compareAt} includesTax={store.pricesIncludeTax} locale={locale} t={t} className={styles.priceTag} />
               </p>
+            ) : page.price ? (
+              <p className={styles.price}>{t('shop.card.onRequest')}</p>
             ) : null}
             <Options page={page} />
             <p className={styles.stock} role="status">

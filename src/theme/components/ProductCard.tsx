@@ -1,5 +1,8 @@
-import { Image, Link, Price, useStorefront, type ProductCard as Card } from '@dripfunnel/storefront-core/theme'
+import { Image, Link, Price, useStorefront, type Money, type ProductCard as Card } from '@dripfunnel/storefront-core/theme'
 import styles from '../styles/shop.module.css'
+
+/** Whether a price is more than nothing; a product priced at zero is shown as "Price on request". */
+export const isPriced = (money: Money) => !/^-?0*\.?0*$/.test(money.amount)
 
 export const ProductCard = ({ product }: { product: Card }) => {
   const { store, locale, t } = useStorefront()
@@ -14,12 +17,14 @@ export const ProductCard = ({ product }: { product: Card }) => {
         <h3 className={styles.cardName}>{product.name}</h3>
       </Link>
       <span className={styles.cardRule} aria-hidden="true" />
-      {product.price ? (
+      {product.price && isPriced(product.price) ? (
         <p className={styles.cardPrice}>
           {product.from ? <span className={styles.from}>{t('shop.card.from')}</span> : null}
           <Price money={product.price} compareAt={product.compareAt} includesTax={store.pricesIncludeTax} locale={locale} t={t} className={styles.price} />
         </p>
-      ) : null}
+      ) : (
+        <p className={styles.cardPrice}>{t('shop.card.onRequest')}</p>
+      )}
       <Link href={product.href} className={styles.cardMore}>
         {t('shop.card.view')}
         <svg className={styles.cardMoreIcon} viewBox="0 0 24 24" aria-hidden="true" focusable="false">

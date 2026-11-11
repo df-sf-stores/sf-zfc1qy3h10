@@ -6,7 +6,8 @@
     "from": "From",
     "soldOut": "Sold out",
     "noPicture": "No picture yet",
-    "view": "View details"
+    "view": "View details",
+    "onRequest": "Price on request"
   },
   "listing": {
     "heading": "Products",

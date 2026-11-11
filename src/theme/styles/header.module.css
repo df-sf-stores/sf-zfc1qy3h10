@@ -1,0 +1,678 @@
+/* The sticky top bar: ivory glass with a thin gold rule; clear over the home page's hero until the shopper scrolls. */
+
+/*
+ * What the header watches: while this strip at the top of the page is on screen, the page hasn't scrolled. It spans the
+ * page's width, since the shell's -8px margin puts its left edge off screen.
+ */
+.top {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 32px;
+  pointer-events: none;
+}
+
+.header {
+  --header-h: 64px;
+
+  position: sticky;
+  z-index: 40;
+  top: 0;
+  border-bottom: 1px solid rgb(210 162 73 / 30%);
+  color: var(--ink);
+  transition:
+    border-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/*
+ * The frosted glass sits on its own layer: a backdrop-filter on the header itself would become the containing block
+ * of the drawer's fixed panel and trap it inside the bar.
+ */
+.header::after {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background-color: rgb(252 250 244 / 88%);
+  backdrop-filter: blur(10px);
+  content: '';
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+@media (min-width: 1024px) {
+  .header {
+    --header-h: 76px;
+  }
+}
+
+/* A dark veil behind the clear bar, so ivory words stay readable over a bright banner. */
+.header::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0 0 -24px;
+  background: linear-gradient(rgb(20 6 8 / 55%), rgb(20 6 8 / 0%));
+  content: '';
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* On the home page the hero slides up under the bar. */
+.overlay {
+  margin-bottom: calc(-1 * var(--header-h));
+}
+
+.clear {
+  border-bottom-color: transparent;
+  color: #fcf8f0;
+}
+
+.clear::before {
+  opacity: 1;
+}
+
+.clear::after {
+  opacity: 0;
+}
+
+.bar {
+  display: flex;
+  box-sizing: border-box;
+  width: min(100%, 1320px);
+  height: var(--header-h);
+  align-items: center;
+  gap: 4px;
+  margin-inline: auto;
+  padding-inline: 8px;
+}
+
+@media (min-width: 640px) {
+  .bar {
+    gap: 8px;
+    padding-inline: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .bar {
+    gap: 24px;
+    padding-inline: 32px;
+  }
+}
+
+.brand {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  align-items: center;
+  color: inherit;
+  font-family: var(--heading-font);
+  font-size: 20px;
+  font-weight: var(--brand-weight);
+  text-decoration: none;
+}
+
+@media (min-width: 1024px) {
+  .brand {
+    flex: 0 0 auto;
+    font-size: 26px;
+  }
+}
+
+.logo {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: 38px;
+  object-fit: contain;
+  object-position: left center;
+  /* The store has one logo: drawn black on the ivory bar and white over the hero. */
+  filter: brightness(0);
+  transition: filter 0.3s ease;
+}
+
+@media (min-width: 1024px) {
+  .logo {
+    height: 48px;
+  }
+}
+
+.clear .logo {
+  filter: brightness(0) invert(1);
+}
+
+/* Desktop menu: the store's menu, each item with its sub-categories in a dropdown. */
+
+.nav {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .nav {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0 4px;
+  }
+}
+
+.navItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.navLink {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  padding: 0 10px;
+  color: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  text-decoration-color: transparent;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-transform: uppercase;
+  text-underline-offset: 6px;
+  transition:
+    color 0.2s ease,
+    text-decoration-color 0.2s ease;
+}
+
+@media (min-width: 1280px) {
+  .navLink {
+    padding: 0 14px;
+    font-size: 13px;
+  }
+}
+
+.navLink:hover {
+  color: var(--accent);
+  text-decoration-color: var(--gold);
+}
+
+.clear .navLink:hover {
+  color: #f3d79b;
+}
+
+.navItem:has(.subToggle) .navLink {
+  padding-right: 0;
+}
+
+.subToggle {
+  display: flex;
+  width: 24px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.chevron {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentcolor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.subnav {
+  position: absolute;
+  z-index: 45;
+  top: 100%;
+  left: 50%;
+  display: none;
+  box-sizing: border-box;
+  width: 260px;
+  flex-direction: column;
+  padding: 18px 18px 14px;
+  border: 1px solid rgb(210 162 73 / 35%);
+  border-top: 2px solid var(--gold);
+  border-radius: 0 0 var(--radius) var(--radius);
+  background: var(--surface);
+  box-shadow: 0 18px 40px rgb(42 10 14 / 16%);
+  color: var(--ink);
+  transform: translateX(-50%);
+}
+
+.subnavOpen {
+  display: flex;
+}
+
+/* Many sub-categories: a wide panel with the links in columns. */
+.mega {
+  width: min(720px, calc(100vw - 64px));
+}
+
+.subTitle {
+  margin: 0 0 8px;
+  padding: 0 10px 10px;
+  border-bottom: 1px solid var(--line);
+  color: var(--gold-text);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.subList {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mega .subList {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 12px;
+}
+
+.subLink {
+  display: flex;
+  min-height: 40px;
+  align-items: center;
+  padding: 0 10px;
+  border-radius: var(--button-radius);
+  color: var(--ink);
+  font-size: 14px;
+  text-decoration: none;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.subLink:hover {
+  background-color: var(--soft);
+  color: var(--accent);
+}
+
+.subAll {
+  display: flex;
+  min-height: 40px;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 0 10px;
+  border-top: 1px solid var(--line);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.subAll:hover {
+  color: var(--gold-text);
+}
+
+/* Tools: search, account, cart and the store finder. */
+
+.tools {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  margin-left: auto;
+}
+
+.tool {
+  position: relative;
+  display: inline-flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background-color: transparent;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.tool:hover {
+  background-color: rgb(121 24 36 / 8%);
+  color: var(--accent);
+}
+
+.clear .tool:hover {
+  background-color: rgb(255 255 255 / 14%);
+  color: #fcf8f0;
+}
+
+/* The smallest phones keep search and cart in the bar; the account link is in the menu. */
+.account {
+  display: none;
+}
+
+@media (min-width: 360px) {
+  .account {
+    display: inline-flex;
+  }
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentcolor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.6;
+}
+
+.count {
+  position: absolute;
+  top: 4px;
+  right: 2px;
+  display: flex;
+  min-width: 18px;
+  height: 18px;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--gold);
+  color: var(--gold-ink);
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.store {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .store {
+    display: inline-flex;
+    min-height: 40px;
+    align-items: center;
+    gap: 6px;
+    margin-left: 8px;
+    padding: 0 14px 0 10px;
+    border: 1px solid rgb(210 162 73 / 60%);
+    border-radius: 999px;
+    color: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .store .icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.store:hover {
+  border-color: var(--accent);
+  background-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+.clear .store:hover {
+  border-color: var(--gold);
+  background-color: var(--gold);
+  color: var(--gold-ink);
+}
+
+/* Between the tablet's drawer and wide desktops the store finder shows only its pin. */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .store {
+    width: 44px;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .storeLabel {
+    position: absolute;
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+.hidden {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Search: a panel that drops below the bar. */
+
+.searchClosed {
+  display: none;
+}
+
+.searchPanel {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  border-bottom: 1px solid rgb(210 162 73 / 30%);
+  background: var(--bg);
+  box-shadow: 0 18px 32px rgb(42 10 14 / 12%);
+  color: var(--ink);
+}
+
+.searchInner {
+  box-sizing: border-box;
+  width: min(100%, 760px);
+  margin-inline: auto;
+  padding: 14px 12px 16px;
+}
+
+@media (min-width: 640px) {
+  .searchInner {
+    padding: 18px 16px 20px;
+  }
+}
+
+.search {
+  position: relative;
+  display: flex;
+  min-height: 48px;
+  box-sizing: border-box;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 4px 4px 18px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.search:focus-within {
+  border-color: var(--ring);
+}
+
+.search label {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.search input {
+  min-width: 0;
+  min-height: 40px;
+  flex: 1;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  outline: none;
+}
+
+.search input::placeholder {
+  color: var(--muted);
+}
+
+/* Core's button carries its word as text; the word is hidden and a magnifier is drawn in its place. */
+.search button {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: transparent;
+  font-size: 0;
+  cursor: pointer;
+}
+
+.search button::before {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 12px;
+  height: 12px;
+  box-sizing: border-box;
+  border: 2px solid var(--accent-ink);
+  border-radius: 50%;
+  content: '';
+}
+
+.search button::after {
+  position: absolute;
+  top: 25px;
+  left: 23px;
+  width: 6px;
+  height: 2px;
+  background: var(--accent-ink);
+  content: '';
+  transform: rotate(45deg);
+  transform-origin: 0 50%;
+}
+
+.search ul {
+  position: absolute;
+  z-index: 46;
+  top: calc(100% + 8px);
+  right: 0;
+  left: 0;
+  margin: 0;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: 0 16px 40px rgb(42 10 14 / 18%);
+  list-style: none;
+}
+
+.search li {
+  border-radius: 6px;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.search li:hover,
+.search li[aria-selected='true'] {
+  background: var(--soft);
+}
+
+.search li:last-child {
+  padding: 10px 12px;
+  border-top: 1px solid var(--line);
+  border-radius: 0 0 6px 6px;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.search li a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.search li img {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  background: var(--soft);
+  object-fit: cover;
+}
+
+.search li span {
+  flex: 1;
+  font-family: var(--heading-font);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.search p {
+  position: absolute;
+  z-index: 46;
+  top: calc(100% + 8px);
+  right: 0;
+  left: 0;
+  margin: 0;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: 0 16px 40px rgb(42 10 14 / 18%);
+  color: var(--muted);
+}
+
+/* Not display: none, so screen readers still announce "No products match" when the status fills. */
+.search p:empty {
+  padding: 0;
+  border: 0;
+  box-shadow: none;
+}
+
+/* Gold focus rings throughout. */
+
+.brand:focus-visible,
+.navLink:focus-visible,
+.subToggle:focus-visible,
+.subLink:focus-visible,
+.subAll:focus-visible,
+.tool:focus-visible,
+.store:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}

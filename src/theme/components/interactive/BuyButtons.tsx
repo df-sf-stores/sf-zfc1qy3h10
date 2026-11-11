@@ -1,7 +1,9 @@
 'use client'
 
-import { useId, useState } from 'react'
-import { AddToCart, BuyNow, Link, TextField, useStorefront, type GiftRecipient, type ProductPage } from '@dripfunnel/storefront-core/theme'
+import { useId, useRef, useState } from 'react'
+import { AddToCart, BuyNow, Link, Price, TextField, useInView, useMediaQuery, useStorefront, type GiftRecipient, type ProductPage } from '@dripfunnel/storefront-core/theme'
+import { isPriced } from '../ProductCard'
+import layout from '../../styles/layout.module.css'
 import shop from '../../styles/shop.module.css'
 import styles from '../../styles/product.module.css'
 
@@ -10,9 +12,13 @@ const emailLike = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 /**
  * Add to cart and Buy now for the chosen version; both wait until every option is chosen and the version is in stock.
  * A gift card asks for its recipient first, as D1's gift card page does; a download or a service says what the shopper gets.
+ * On a phone, once the buttons scroll off screen, a bar along the bottom keeps the price and Add to cart in reach.
  */
 export const BuyButtons = ({ page }: { page: ProductPage }) => {
-  const { t } = useStorefront()
+  const { store, locale, t } = useStorefront()
+  const box = useRef<HTMLDivElement>(null)
+  const inView = useInView(box)
+  const phone = useMediaQuery('(max-width: 767px)')
   const [addedId, setAddedId] = useState<string | null>(null)
   const [failed, setFailed] = useState(false)
   const [gift, setGift] = useState<GiftRecipient>({ recipientName: '', recipientEmail: '', sendOn: '', message: '' })
@@ -27,8 +33,14 @@ export const BuyButtons = ({ page }: { page: ProductPage }) => {
   const added = version !== null && addedId === version.id
   // A gift card keeps Add to cart, so a second one can go to someone else.
   const inCart = added && !isGift
+  // Not for a gift card, whose recipient is asked for beside the main button.
+  const bar = phone && !inView && !isGift && page.product !== null
+  const onAdded = (worked: boolean) => {
+    setFailed(!worked)
+    if (worked) setAddedId(version?.id ?? null)
+  }
   return (
-    <div className={styles.buy}>
+    <div ref={box} className={styles.buy}>
       {kind?.kind === 'digital' ? (
         <p className={styles.kindNote}>{kind.downloadLimit !== null && kind.downloadDays !== null ? t('shop.product.download', { times: kind.downloadLimit, days: kind.downloadDays }) : t('shop.product.downloadPlain')}</p>
       ) : null}
@@ -64,10 +76,7 @@ export const BuyButtons = ({ page }: { page: ProductPage }) => {
           gift={isGift ? gift : null}
           describedBy={waitsForRecipient ? why : undefined}
           className={shop.primary}
-          onDone={(worked) => {
-            setFailed(!worked)
-            if (worked) setAddedId(version?.id ?? null)
-          }}
+          onDone={onAdded}
         >
           {isGift ? t('shop.product.gift.add') : t('shop.product.add')}
         </AddToCart>
@@ -81,6 +90,27 @@ export const BuyButtons = ({ page }: { page: ProductPage }) => {
         <p className={styles.added} role="status">
           {failed ? t('shop.product.addFailed') : t('shop.product.added')}
         </p>
+      ) : null}
+      {bar ? (
+        <div className={layout.buyBar}>
+          <div className={layout.buyBarText}>
+            <p className={layout.buyBarName}>{page.product?.name}</p>
+            {page.price && isPriced(page.price) ? (
+              <Price money={page.price} compareAt={page.compareAt} includesTax={store.pricesIncludeTax} locale={locale} t={t} className={layout.buyBarPrice} />
+            ) : (
+              <p className={layout.buyBarPrice}>{t('shop.card.onRequest')}</p>
+            )}
+          </div>
+          {inCart ? (
+            <Link href="/cart/" className={layout.buyBarButton}>
+              {t('shop.product.goToCart')}
+            </Link>
+          ) : (
+            <AddToCart versionId={version?.id ?? null} disabled={!buyable} gift={null} className={layout.buyBarButton} onDone={onAdded}>
+              {t('shop.product.add')}
+            </AddToCart>
+          )}
+        </div>
       ) : null}
     </div>
   )

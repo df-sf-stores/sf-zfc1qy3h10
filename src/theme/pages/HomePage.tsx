@@ -124,7 +124,7 @@ export const HomePage = () => {
     </Link>
   )
   return (
-    <Layout>
+    <Layout overlay>
       <h1 className={styles.hidden}>{t('home.title')}</h1>
       <HeroCarousel
         slides={[

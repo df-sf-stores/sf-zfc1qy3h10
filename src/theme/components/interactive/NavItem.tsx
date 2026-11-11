@@ -2,8 +2,13 @@
 
 import { useRef, useState } from 'react'
 import { Link, useStorefront, type MenuItem } from '@dripfunnel/storefront-core/theme'
-import styles from '../../styles/layout.module.css'
+import { cx } from '../cx'
+import styles from '../../styles/header.module.css'
 
+/** Past this many sub-categories the dropdown opens as a wide, multi-column mega menu. */
+const megaFrom = 7
+
+/** A top-level menu link; one with sub-categories opens them on hover, on focus or from its arrow button. */
 export const NavItem = ({ item }: { item: MenuItem }) => {
   const { t } = useStorefront()
   const [open, setOpen] = useState(false)
@@ -15,6 +20,14 @@ export const NavItem = ({ item }: { item: MenuItem }) => {
     clearTimeout(leaving.current)
     setOpen(value)
   }
+  if (!item.children.length)
+    return (
+      <div className={styles.navItem}>
+        <Link href={item.href} className={styles.navLink}>
+          {item.label}
+        </Link>
+      </div>
+    )
   return (
     <div
       className={styles.navItem}
@@ -31,7 +44,7 @@ export const NavItem = ({ item }: { item: MenuItem }) => {
       onPointerLeave={(e) => {
         if (e.pointerType !== 'mouse') return
         hovered.current = false
-        if (!focused.current) show(false)
+        if (!focused.current) leaving.current = setTimeout(() => setOpen(false), 120)
       }}
       onFocus={(e) => {
         focused.current = true
@@ -46,22 +59,29 @@ export const NavItem = ({ item }: { item: MenuItem }) => {
       <Link href={item.href} className={styles.navLink}>
         {item.label}
       </Link>
-      {item.children.length ? (
-        <>
-          <button ref={toggle} type="button" className={styles.subToggle} aria-expanded={open} aria-label={t('common.nav.submenu', { item: item.label })} onClick={() => show(hovered.current || !open)}>
-            <svg className={styles.icon} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-              <path d="M6 9l6 6 6-6" />
-            </svg>
-          </button>
-          <div className={open ? `${styles.subnav} ${styles.subnavOpen}` : styles.subnav}>
-            {item.children.map((child) => (
-              <Link key={child.id} href={child.href} className={styles.subLink}>
+      <button ref={toggle} type="button" className={styles.subToggle} aria-expanded={open} aria-label={t('common.nav.submenu', { item: item.label })} onClick={() => show(hovered.current || !open)}>
+        <svg className={styles.chevron} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </button>
+      <div className={cx(styles.subnav, item.children.length >= megaFrom && styles.mega, open && styles.subnavOpen)}>
+        <p className={styles.subTitle}>{item.label}</p>
+        <ul className={styles.subList}>
+          {item.children.map((child) => (
+            <li key={child.id}>
+              <Link href={child.href} className={styles.subLink}>
                 {child.label}
               </Link>
-            ))}
-          </div>
-        </>
-      ) : null}
+            </li>
+          ))}
+        </ul>
+        <Link href={item.href} className={styles.subAll}>
+          {t('common.nav.shopAllOf', { item: item.label })}
+          <svg className={styles.chevron} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </Link>
+      </div>
     </div>
   )
 }

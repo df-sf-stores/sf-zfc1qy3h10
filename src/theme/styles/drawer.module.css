@@ -1,0 +1,514 @@
+/* Phones and tablets: the menu slides in from the left over a dimmed page. */
+
+.toggle {
+  display: inline-flex;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+@media (min-width: 1024px) {
+  .toggle {
+    display: none;
+  }
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentcolor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.6;
+}
+
+.hidden {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.backdrop,
+.backdropOpen {
+  position: fixed;
+  z-index: 60;
+  inset: 0;
+  background: rgb(28 10 12 / 55%);
+  /* A touch on the dimmed page doesn't scroll it while the menu is open. */
+  touch-action: none;
+  transition: opacity 0.3s ease;
+}
+
+.backdrop {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.backdropOpen {
+  opacity: 1;
+}
+
+.panel,
+.panelOpen {
+  position: fixed;
+  z-index: 61;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  box-sizing: border-box;
+  width: min(88vw, 380px);
+  flex-direction: column;
+  gap: 18px;
+  padding: 12px 16px 24px;
+  border-right: 1px solid rgb(210 162 73 / 40%);
+  background: var(--bg);
+  box-shadow: 12px 0 40px rgb(28 10 12 / 25%);
+  color: var(--ink);
+  overflow-y: auto;
+  /* Scrolling the menu never scrolls the page behind it. */
+  overscroll-behavior: contain;
+  transition: transform 0.32s ease;
+}
+
+.panel {
+  transform: translateX(-105%);
+  visibility: hidden;
+}
+
+.panelOpen {
+  transform: translateX(0);
+}
+
+@media (min-width: 1024px) {
+  .backdrop,
+  .backdropOpen,
+  .panel,
+  .panelOpen {
+    display: none;
+  }
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgb(210 162 73 / 35%);
+}
+
+.brand {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  color: var(--ink);
+  font-family: var(--heading-font);
+  font-size: 22px;
+  font-weight: var(--brand-weight);
+  text-decoration: none;
+}
+
+.logo {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: 40px;
+  /* Black on the ivory panel, as in the header. */
+  filter: brightness(0);
+  object-fit: contain;
+  object-position: left center;
+}
+
+.close {
+  display: inline-flex;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+/* Core's search field, as in the header's panel. */
+.search {
+  position: relative;
+  display: flex;
+  min-height: 46px;
+  box-sizing: border-box;
+  align-items: center;
+  gap: 10px;
+  padding: 3px 3px 3px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.search:focus-within {
+  border-color: var(--ring);
+}
+
+.search label {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.search input {
+  min-width: 0;
+  min-height: 38px;
+  flex: 1;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  outline: none;
+}
+
+.search input::placeholder {
+  color: var(--muted);
+}
+
+.search button {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: transparent;
+  font-size: 0;
+  cursor: pointer;
+}
+
+.search button::before {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 12px;
+  height: 12px;
+  box-sizing: border-box;
+  border: 2px solid var(--accent-ink);
+  border-radius: 50%;
+  content: '';
+}
+
+.search button::after {
+  position: absolute;
+  top: 25px;
+  left: 23px;
+  width: 6px;
+  height: 2px;
+  background: var(--accent-ink);
+  content: '';
+  transform: rotate(45deg);
+  transform-origin: 0 50%;
+}
+
+.search ul {
+  position: absolute;
+  z-index: 62;
+  top: calc(100% + 6px);
+  right: 0;
+  left: 0;
+  margin: 0;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: 0 16px 40px rgb(42 10 14 / 18%);
+  list-style: none;
+}
+
+.search li {
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.search li:hover,
+.search li[aria-selected='true'] {
+  background: var(--soft);
+}
+
+.search li:last-child {
+  padding: 10px 12px;
+  border-top: 1px solid var(--line);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.search li a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.search li img {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  background: var(--soft);
+  object-fit: cover;
+}
+
+.search li span {
+  flex: 1;
+  font-family: var(--heading-font);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.search p {
+  position: absolute;
+  z-index: 62;
+  top: calc(100% + 6px);
+  right: 0;
+  left: 0;
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--muted);
+}
+
+.search p:empty {
+  padding: 0;
+  border: 0;
+}
+
+/* The menu: one row per item, sub-categories folded into accordions. */
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  border-bottom: 1px solid var(--line);
+}
+
+.link,
+.summary {
+  display: flex;
+  min-height: 52px;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 4px;
+  color: var(--ink);
+  font-family: var(--heading-font);
+  font-size: 20px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.summary {
+  list-style: none;
+}
+
+.summary::marker {
+  font-size: 0;
+}
+
+.link:hover,
+.summary:hover {
+  color: var(--accent);
+}
+
+.chevron {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: var(--gold-text);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+  transition: transform 0.25s ease;
+}
+
+.group[open] .chevron {
+  transform: rotate(180deg);
+}
+
+.subList {
+  margin: 0 0 12px;
+  padding: 4px 0 4px 12px;
+  border-left: 2px solid rgb(210 162 73 / 45%);
+  list-style: none;
+}
+
+.subLink,
+.subAll {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  padding: 0 10px;
+  border-radius: var(--button-radius);
+  color: var(--ink-soft);
+  font-size: 15px;
+  text-decoration: none;
+}
+
+.subAll {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.subLink:hover {
+  background: var(--soft);
+  color: var(--accent);
+}
+
+/* The shopper's own links, as three equal tiles. */
+
+.quick {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.quickLink {
+  display: flex;
+  min-height: 48px;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+}
+
+.quickLink:hover {
+  border-color: var(--gold);
+  color: var(--accent);
+}
+
+/* Contact: the store's phone and email, and buttons for WhatsApp and the store finder. */
+
+.contact {
+  margin-top: auto;
+  padding: 16px;
+  border: 1px solid rgb(210 162 73 / 35%);
+  border-radius: var(--radius);
+  background: var(--soft);
+}
+
+.contactTitle {
+  margin: 0 0 10px;
+  color: var(--gold-text);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.contactLine {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 10px;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.contactTerm {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.buttons {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  margin-top: 4px;
+}
+
+.whatsapp,
+.findStore {
+  display: flex;
+  min-height: 44px;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  padding: 0 14px;
+  border-radius: var(--button-radius);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.whatsapp {
+  background: #25d366;
+  color: #0b2e17;
+}
+
+.findStore {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.toggle:focus-visible,
+.close:focus-visible,
+.brand:focus-visible,
+.link:focus-visible,
+.summary:focus-visible,
+.subLink:focus-visible,
+.subAll:focus-visible,
+.quickLink:focus-visible,
+.whatsapp:focus-visible,
+.findStore:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
