@@ -148,10 +148,11 @@ export const ProductPage = () => {
             <span className={styles.rule} aria-hidden="true">
               <span className={styles.ruleMark} />
             </span>
-            {page.options.some((o) => o.values.length > 1) ? <Options page={page} /> : null}
             <p className={styles.stock} role="status">
               {firstMissing ? t('shop.product.choose', { option: firstMissing.name }) : page.stock?.inStock ? t('shop.product.inStock') : t('shop.product.outOfStock')}
             </p>
+            {/* Every option (size, colour, type…) just above the quantity, even one with a single value. */}
+            {page.options.length ? <Options page={page} /> : null}
             <BuyButtons page={page} />
             <TrustBadges />
             {product.highlights.length ? (
