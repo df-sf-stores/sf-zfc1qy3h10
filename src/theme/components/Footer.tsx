@@ -260,8 +260,9 @@ export const Footer = () => {
           <div className={styles.poweredBlock}>
             <PoweredBy brand={poweredBy} t={t} className={styles.powered} />
             {poweredBy.toLowerCase() === 'dripfunnel' ? (
-              <Link href={t('common.footer.poweredUrl')} className={styles.poweredMark} aria-label={t('common.footer.poweredLabel')}>
+              <Link href={t('common.footer.poweredUrl')} className={styles.poweredMark}>
                 <DripFunnelLogo />
+                <span className={styles.hidden}>{t('common.footer.poweredLabel')}</span>
               </Link>
             ) : (
               <span className={styles.poweredMark}>{poweredBy}</span>
