@@ -253,22 +253,21 @@ export const Footer = () => {
         <p className={styles.copyright}>{town ? t('common.footer.rightsAt', { store: store.name, place: town }) : t('common.footer.rights', { store: store.name })}</p>
         <ConsentSettingsButton t={t} className={styles.cookies} />
         {/*
-          The platform decides whether a store shows "Powered by" (core's sealed line, worded "Powered by" alone in
-          content/en/powered.json); where it does, DripFunnel's logo follows, linking to its site.
+          "Powered by" and DripFunnel's logo, linking to its site, on every page. Where the platform names the brand,
+          core's sealed line says "Powered by" (worded so in content/en/powered.json); elsewhere, local dev included,
+          the theme's own words do.
         */}
-        {poweredBy ? (
-          <div className={styles.poweredBlock}>
-            <PoweredBy brand={poweredBy} t={t} className={styles.powered} />
-            {poweredBy.toLowerCase() === 'dripfunnel' ? (
-              <Link href={t('common.footer.poweredUrl')} className={styles.poweredMark}>
-                <DripFunnelLogo />
-                <span className={styles.hidden}>{t('common.footer.poweredLabel')}</span>
-              </Link>
-            ) : (
-              <span className={styles.poweredMark}>{poweredBy}</span>
-            )}
-          </div>
-        ) : null}
+        <div className={styles.poweredBlock}>
+          {poweredBy ? <PoweredBy brand={poweredBy} t={t} className={styles.powered} /> : <span className={styles.poweredText}>{t('common.footer.poweredBy')}</span>}
+          {!poweredBy || poweredBy.toLowerCase() === 'dripfunnel' ? (
+            <Link href={t('common.footer.poweredUrl')} className={styles.poweredMark}>
+              <DripFunnelLogo />
+              <span className={styles.hidden}>{t('common.footer.poweredLabel')}</span>
+            </Link>
+          ) : (
+            <span className={styles.poweredMark}>{poweredBy}</span>
+          )}
+        </div>
       </div>
     </footer>
   )

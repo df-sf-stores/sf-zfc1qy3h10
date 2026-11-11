@@ -552,6 +552,11 @@
   --df-sealed-muted: var(--footer-ink);
 }
 
+.poweredText {
+  color: var(--footer-ink);
+  font-size: 13px;
+}
+
 .poweredMark {
   display: inline-flex;
   min-height: 44px;
