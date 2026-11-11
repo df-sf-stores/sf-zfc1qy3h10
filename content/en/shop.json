@@ -69,7 +69,7 @@
     "delivery": "Delivery and returns",
     "warranty": "Warranty",
     "questions": "Questions",
-    "related": "You may also like",
+    "related": "Related Products",
     "add": "Add to cart",
     "buyNow": "Buy now",
     "added": "Added to your cart.",
@@ -88,6 +88,43 @@
       "sendHintExpiry": "We email it that morning. Leave it empty to send it now. It can be used for {months, plural, one {# month} other {# months}} after it's sent.",
       "add": "Add gift card to cart",
       "needed": "Add the recipient's name and email to add this gift card."
+    },
+    "relatedEyebrow": "You may also like",
+    "moreToExplore": "More to explore",
+    "wishlistAdd": "Add {name} to your wishlist",
+    "wishlistRemove": "Remove {name} from your wishlist",
+    "off": "{percent}% OFF",
+    "quantity": "Quantity",
+    "enquire": "Enquire on WhatsApp",
+    "viewCart": "View cart",
+    "dispatch": "Usually dispatched within 2 business days",
+    "information": "Product Information",
+    "description": "Product Description",
+    "readMore": "Read more",
+    "readLess": "Read less",
+    "trust": {
+      "payments": "Secure UPI & Card Payments",
+      "paymentsBody": "Pay by UPI, debit or credit card or net banking through our secure payment partner. We never see or store your card details.",
+      "returns": "Returns on Select Items",
+      "returnsBody": "Some items can be returned if they arrive unused and with their tags. Our return policy lists which ones, and how.",
+      "shipping": "Ships All Over India",
+      "shippingBody": "We deliver to addresses across India. Delivery times and charges are set out in our shipping policy.",
+      "policy": "Read the full policy"
+    },
+    "question": {
+      "title": "Have a question?",
+      "lead": "Get in touch directly on WhatsApp!",
+      "action": "Start Chat",
+      "message": "Hello! I am interested in buying {name}."
+    },
+    "gallery": {
+      "open": "Image {n} of {count}, open full screen",
+      "image": "Image {n} of {count}",
+      "previous": "Previous image",
+      "next": "Next image",
+      "counter": "{n} / {count}",
+      "close": "Close",
+      "zoom": "Zoom in or out"
     }
   },
   "cart": {

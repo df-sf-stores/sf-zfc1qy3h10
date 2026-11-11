@@ -1,148 +1,585 @@
+/* The product page: a white gallery card on the left, the buying column on the right; one column below 1024px. */
+
+.page {
+  box-sizing: border-box;
+  width: min(100%, 1280px);
+  margin-inline: auto;
+  padding: 16px 16px 40px;
+}
+
+@media (min-width: 768px) {
+  .page {
+    padding: 24px 24px 56px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page {
+    padding: 28px 32px 72px;
+  }
+}
+
+/*
+ * Breadcrumbs: core's sealed trail. Its parts can't be clipped (core locks their overflow), so the last crumb, the
+ * product, wraps onto further lines on phones rather than running off the screen.
+ */
+.crumbs {
+  display: block;
+  margin-bottom: 16px;
+  font-size: 13px;
+  --df-sealed-color: var(--ink);
+  --df-sealed-muted: var(--muted);
+}
+
+.crumbs::part(list) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 6px;
+  padding: 0;
+  list-style: none;
+}
+
+.crumbs::part(link) {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.crumbs::part(current) {
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
 .product {
   display: grid;
   gap: 24px;
   grid-template-columns: minmax(0, 1fr);
 }
 
+@media (min-width: 1024px) {
+  .product {
+    align-items: start;
+    gap: 48px;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  }
+
+  /* The gallery stays in view while the buying column scrolls past it, clear of the sticky header. */
+  .galleryColumn {
+    position: sticky;
+    top: 140px;
+  }
+}
+
+/*
+ * A sticky column is a stacking context of its own, which would hold the full-screen picture under the header; while it
+ * is open the column is lifted above everything.
+ */
+.galleryColumn:has(.lightbox) {
+  z-index: 95;
+}
+
+/* Gallery */
+
 .gallery {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  gap: 10px;
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .galleryWithThumbs {
+    padding-left: 96px;
+  }
 }
 
 .stage {
+  position: relative;
   overflow: hidden;
-  aspect-ratio: 4 / 5;
-  border-radius: var(--radius);
-  background: var(--picture-alt);
+  aspect-ratio: 1;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgb(210 162 73 / 30%);
+  touch-action: pan-y;
+}
+
+.stageButton {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
 }
 
 .media {
   display: block;
+  box-sizing: border-box;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  padding: 4%;
+  object-fit: contain;
 }
 
-.noPicture {
-  aspect-ratio: 4 / 5;
-  border-radius: var(--radius);
-  background: var(--picture-alt);
+.stageArrow {
+  position: absolute;
+  top: 50%;
+  display: flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgb(252 250 244 / 90%);
+  box-shadow:
+    0 0 0 1px rgb(210 162 73 / 45%),
+    0 4px 14px rgb(42 10 14 / 14%);
+  color: var(--accent);
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition:
+    opacity 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.stageArrow svg,
+.lightboxArrow svg,
+.lightboxClose svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentcolor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.stagePrev {
+  left: 12px;
+}
+
+.stageNext {
+  right: 12px;
+}
+
+.stageArrow:hover {
+  background: #fff;
+}
+
+/* On desktop the arrows show while the pointer or focus is on the picture. */
+@media (min-width: 1024px) {
+  .stageArrow {
+    width: 38px;
+    height: 38px;
+    opacity: 0;
+  }
+
+  .stage:hover .stageArrow,
+  .stage:focus-within .stageArrow {
+    opacity: 1;
+  }
+}
+
+.counter {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  display: none;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgb(252 250 244 / 92%);
+  box-shadow: 0 0 0 1px rgb(210 162 73 / 45%);
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.dots {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  display: flex;
+  gap: 6px;
+  transform: translateX(-50%);
+}
+
+.dot,
+.dotOn {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: rgb(121 24 36 / 22%);
+  transition: background-color 0.2s ease;
+}
+
+.dotOn {
+  width: 20px;
+  background: var(--accent);
+}
+
+@media (min-width: 1024px) {
+  .counter {
+    display: block;
+  }
+
+  .dots {
+    display: none;
+  }
 }
 
 .thumbs {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
+  margin: 12px 0 0;
+  padding: 2px;
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+@media (min-width: 1024px) {
+  .thumbs {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 84px;
+    flex-direction: column;
+    margin: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
 }
 
 .thumb,
 .thumbOn {
-  display: inline-flex;
-  overflow: hidden;
-  width: 60px;
-  height: 60px;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  border: 2px solid transparent;
+  position: relative;
+  display: block;
+  width: 64px;
+  height: 64px;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  padding: 4px;
+  border: 0;
   border-radius: 8px;
-  background: var(--soft);
-  color: var(--ink);
+  background: #fff;
   cursor: pointer;
+  transition:
+    opacity 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+@media (min-width: 1024px) {
+  .thumb,
+  .thumbOn {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+.thumb {
+  box-shadow: 0 0 0 1px rgb(210 162 73 / 30%);
+  opacity: 0.7;
+}
+
+.thumb:hover {
+  box-shadow: 0 0 0 1px var(--gold);
+  opacity: 1;
 }
 
 .thumbOn {
-  border-color: var(--ink);
+  box-shadow: 0 0 0 2px var(--accent);
 }
 
 .thumbImage {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .play {
-  width: 22px;
-  height: 22px;
-  fill: currentcolor;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 28px;
+  height: 28px;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgb(42 10 14 / 70%);
+  fill: #fff;
+  transform: translate(-50%, -50%);
 }
+
+.noPicture {
+  aspect-ratio: 1;
+  border-radius: 16px;
+  background: var(--picture);
+  box-shadow: 0 0 0 1px rgb(210 162 73 / 30%);
+}
+
+/* Lightbox: the picture full screen; a press zooms in where the pointer is. */
+
+.lightbox {
+  position: fixed;
+  z-index: 90;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(20 6 8 / 94%);
+}
+
+.lightboxArea {
+  overflow: hidden;
+  width: min(94vw, 88vh);
+  aspect-ratio: 1;
+  border-radius: 12px;
+  background: #fff;
+  /* Phones pinch to zoom the picture. */
+  touch-action: pinch-zoom;
+}
+
+.lightboxImage,
+.lightboxZoomed {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+.lightboxImage {
+  cursor: zoom-in;
+}
+
+.lightboxZoomed {
+  cursor: zoom-out;
+}
+
+.lightboxPicture {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform-origin: var(--zoom-x, 50%) var(--zoom-y, 50%);
+  transition: transform 0.25s ease;
+}
+
+.lightboxZoomed .lightboxPicture {
+  transform: scale(2.2);
+}
+
+.lightboxClose,
+.lightboxArrow {
+  position: absolute;
+  display: flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid rgb(224 174 87 / 60%);
+  border-radius: 999px;
+  background: rgb(42 10 14 / 60%);
+  color: #f3eee3;
+  cursor: pointer;
+}
+
+.lightboxClose {
+  top: 16px;
+  right: 16px;
+}
+
+.lightboxArrow {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.lightboxCounter {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  color: #f3eee3;
+  font-size: 13px;
+  font-weight: 700;
+  transform: translateX(-50%);
+}
+
+/* Buying column */
 
 .info {
   display: flex;
   min-width: 0;
   flex-direction: column;
+  gap: 20px;
+}
+
+.titleRow {
+  display: flex;
   align-items: flex-start;
-  gap: 14px;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.titleText {
+  min-width: 0;
 }
 
 .badge {
+  display: inline-flex;
+  margin-bottom: 8px;
   padding: 3px 10px;
-  border: 1px solid var(--line);
   border-radius: 999px;
-  background: var(--surface);
-  font-size: 12px;
-  font-weight: 600;
+  background: var(--tint);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-.title,
-.loadingTitle {
+.title {
   margin: 0;
-  font-family: var(--heading-font);
-  font-size: 28px;
-  font-weight: var(--heading-weight);
-  letter-spacing: var(--heading-spacing);
-  line-height: 1.15;
-  overflow-wrap: anywhere;
-  text-transform: var(--heading-case);
+  color: var(--ink);
+  font-family: var(--body-font);
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.3;
 }
 
-.loadingTitle {
-  color: var(--muted);
-  font-size: 20px;
+@media (min-width: 768px) {
+  .title {
+    font-size: 30px;
+  }
+}
+
+.roundButton {
+  display: inline-flex;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgb(210 162 73 / 45%);
+  color: var(--accent);
+  cursor: pointer;
+  transition: box-shadow 0.2s ease;
+}
+
+.roundButton:hover {
+  box-shadow: 0 0 0 1px var(--gold);
+}
+
+.heart,
+.heartOn {
+  width: 20px;
+  height: 20px;
+  stroke: currentcolor;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+  transition: fill 0.2s ease;
+}
+
+.heart {
+  fill: none;
+}
+
+.heartOn {
+  fill: currentcolor;
+}
+
+/* Price */
+
+.priceBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .price {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
-  gap: 6px;
+  align-items: center;
+  gap: 8px 12px;
   margin: 0;
-  font-size: 20px;
 }
 
 .from {
-  font-weight: 700;
+  color: var(--muted);
+  font-size: 14px;
 }
 
+/*
+ * Core's sealed price, sized through its own custom properties (its parts lock their font size): the amount large in
+ * maroon, the old price struck through, its tax note on a line of its own.
+ */
 .priceTag {
-  display: inline-block;
-  --df-price-size: 20px;
-  --df-sealed-size: 13px;
+  color: var(--accent);
+  font-size: 17px;
+  --df-price-size: 32px;
+  --df-sealed-color: var(--accent);
+  --df-sealed-muted: var(--muted);
 }
 
 .priceTag::part(amount) {
-  font-weight: 700;
-}
-
-.priceTag::part(was) {
-  margin-left: 8px;
-  color: var(--muted);
-  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.1;
 }
 
 .priceTag::part(tax) {
-  color: var(--muted);
-  font-size: 13px;
+  flex-basis: 100%;
 }
+
+.off {
+  display: inline-flex;
+  /* Level with the amount, not centred against the price and its tax line. */
+  align-self: flex-start;
+  margin-top: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--gold);
+  color: var(--gold-ink);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.onRequest {
+  color: var(--accent);
+  font-size: 26px;
+  font-weight: 800;
+}
+
+/* A thin gold rule with a small diamond at its centre. */
+.rule {
+  position: relative;
+  display: block;
+  height: 1px;
+  background: linear-gradient(90deg, rgb(210 162 73 / 0%), rgb(210 162 73 / 60%) 20%, rgb(210 162 73 / 60%) 80%, rgb(210 162 73 / 0%));
+}
+
+.ruleMark {
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  background: var(--gold);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+/* Options: each value a pill; the chosen one ringed in maroon, a sold-out one struck through. */
 
 .options {
   display: flex;
-  width: 100%;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
 .option {
@@ -154,7 +591,8 @@
 .optionName {
   margin: 0;
   color: var(--muted);
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 700;
 }
 
 .values {
@@ -166,188 +604,774 @@
 .value,
 .valueOn,
 .valueGone {
-  min-width: 56px;
   min-height: 44px;
-  padding: 0 16px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--surface);
+  padding: 0 18px;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgb(210 162 73 / 45%);
   color: var(--ink);
   font: inherit;
-  font-weight: 600;
+  font-size: 14px;
   cursor: pointer;
+  transition: box-shadow 0.2s ease;
+}
+
+.value:hover {
+  box-shadow: 0 0 0 1px var(--gold);
 }
 
 .valueOn {
-  border-color: var(--ink);
-  box-shadow: inset 0 0 0 1px var(--ink);
+  box-shadow: 0 0 0 2px var(--accent);
+  color: var(--accent);
+  font-weight: 700;
 }
 
 .valueGone {
   color: var(--muted);
+  opacity: 0.6;
   text-decoration: line-through;
 }
 
 .stock {
-  margin: 0;
-  color: var(--ink-soft);
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.highlights {
-  margin: 0;
-  padding-left: 18px;
-  color: var(--ink-soft);
-}
-
-.legal {
-  display: block;
-  width: 100%;
-  --df-sealed-size: 14px;
-}
-
-.sections {
-  width: 100%;
-  border-top: 1px solid var(--line);
-}
-
-.section {
-  padding: 14px 0;
-  border-bottom: 1px solid var(--line);
-}
-
-.summary {
-  min-height: 28px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.body {
-  max-width: 60ch;
-  margin: 10px 0 0;
-  color: var(--ink-soft);
-  overflow-wrap: anywhere;
-}
-
-.specs {
-  display: grid;
-  gap: 8px;
-  margin: 10px 0 0;
-}
-
-.spec,
-.faq {
-  display: grid;
-  gap: 2px;
-}
-
-.spec dt,
-.faq dt {
+  margin: -6px 0 0;
   color: var(--muted);
   font-size: 13px;
+  font-weight: 600;
 }
 
-.spec dd,
-.faq dd {
-  margin: 0;
-  color: var(--ink-soft);
-  overflow-wrap: anywhere;
-}
-
-.related {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding-top: 40px;
-}
-
-.thumb:focus-visible,
-.thumbOn:focus-visible,
-.value:focus-visible,
-.valueOn:focus-visible,
-.valueGone:focus-visible,
-.summary:focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
-}
-
-@media (min-width: 900px) {
-  .product {
-    align-items: start;
-    gap: 40px;
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-  }
-
-  .title {
-    font-size: 32px;
-  }
-
-  .related {
-    padding-top: 56px;
-  }
-}
+/* Quantity and buttons */
 
 .buy {
   display: flex;
-  align-self: stretch;
-  flex-wrap: wrap;
-  gap: 10px;
+  flex-direction: column;
+  gap: 14px;
 }
 
-.buy > button,
-.buy > a {
-  flex: 1 1 180px;
+.quantityRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
-.buy > button:disabled {
+.quantityLabel {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgb(210 162 73 / 60%);
+}
+
+.step {
+  display: flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.step svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentcolor;
+  stroke-linecap: round;
+  stroke-width: 2;
+}
+
+.step:disabled {
+  color: var(--muted);
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.amount {
+  min-width: 28px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.addButton,
+.buyButton,
+.enquire {
+  display: inline-flex;
+  min-height: 46px;
+  flex: 1 1 0;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 16px;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.addButton {
+  border: 1px solid rgb(210 162 73 / 60%);
+  background-color: #fff;
+  color: var(--accent);
+}
+
+.addButton:hover {
+  background-color: rgb(210 162 73 / 10%);
+}
+
+.buyButton {
+  border: 1px solid var(--accent);
+  background-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+.buyButton:hover {
+  border-color: #8f2230;
+  background-color: #8f2230;
+}
+
+.addButton:disabled,
+.buyButton:disabled {
+  cursor: not-allowed;
   opacity: 0.55;
-  cursor: default;
+}
+
+.enquire {
+  border: 1px solid #25d366;
+  background-color: #25d366;
+  color: #0b2e17;
+}
+
+.enquire:hover {
+  background-color: #3ee07a;
+}
+
+.buttonIcon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentcolor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.enquire .buttonIcon,
+.questionButton .buttonIcon {
+  fill: currentcolor;
+  stroke: none;
+}
+
+.added,
+.addFailed {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.added {
+  background: rgb(37 211 102 / 12%);
+  color: #14532d;
+}
+
+.addFailed {
+  background: rgb(228 0 20 / 8%);
+  color: var(--danger);
+}
+
+.viewCart {
+  margin-left: auto;
+  color: var(--accent);
+  font-weight: 800;
 }
 
 .kindNote {
-  flex-basis: 100%;
   margin: 0;
-  color: var(--ink-soft);
+  color: var(--muted);
   font-size: 14px;
 }
 
 .gift {
   display: grid;
-  flex-basis: 100%;
   gap: 12px;
 }
 
 .field {
-  display: grid;
-  gap: 6px;
+  display: block;
 }
 
-.field label {
+/* Phones and tablets: once the buttons scroll away, a bar with the same two slides up along the bottom. */
+.stickyBar {
+  position: fixed;
+  z-index: 35;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-sizing: border-box;
+  /* Room on the right for the floating WhatsApp button. */
+  padding: 10px 84px calc(10px + env(safe-area-inset-bottom)) 12px;
+  border-top: 1px solid rgb(210 162 73 / 30%);
+  background: rgb(252 250 244 / 95%);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 -10px 30px rgb(42 10 14 / 12%);
+  transform: translateY(110%);
+  visibility: hidden;
+  transition: transform 0.3s ease;
+}
+
+.stickyBarShown {
+  transform: translateY(0);
+  visibility: visible;
+}
+
+.stickyButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.stickyButtons .addButton,
+.stickyButtons .buyButton,
+.stickyButtons .enquire {
+  min-height: 44px;
+  padding: 0 10px;
   font-size: 14px;
+}
+
+@media (min-width: 1024px) {
+  .stickyBar {
+    display: none;
+  }
+}
+
+/* Trust badges */
+
+.trust {
+  overflow: hidden;
+  border: 1px solid rgb(210 162 73 / 40%);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.trustList {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+}
+
+.trustItem {
+  display: flex;
+  width: 100%;
+  min-height: 44px;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 6px;
+  border: 0;
+  border-radius: 12px;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.trustItem:hover,
+.trustItem[aria-expanded='true'] {
+  background-color: var(--soft);
+}
+
+.trustIcon {
+  display: flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--soft);
+  box-shadow: 0 0 0 1px rgb(210 162 73 / 45%);
+}
+
+.trustIcon svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: var(--accent);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+.trustTitle {
+  font-size: 12px;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.trustDetail {
+  padding: 12px 16px 14px;
+  border-top: 1px solid var(--line);
+  background: var(--bg);
+}
+
+.trustBody {
+  margin: 0 0 6px;
+  color: var(--ink-soft);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.trustLink {
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.dispatch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+  padding: 10px 12px;
+  background: var(--soft);
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+}
+
+.dispatchIcon {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: var(--gold-text);
+  stroke-linecap: round;
+  stroke-width: 1.7;
+}
+
+.highlights {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--ink-soft);
+}
+
+.highlights li {
+  margin: 4px 0;
+}
+
+/* Product information */
+
+.infoCard {
+  padding: 22px 20px;
+  border: 1px solid rgb(210 162 73 / 30%);
+  border-radius: 16px;
+  background: #fff;
+}
+
+@media (min-width: 768px) {
+  .infoCard {
+    padding: 26px 24px;
+  }
+}
+
+.infoTitle {
+  margin: 0 0 10px;
+  color: var(--ink);
+  font-family: var(--body-font);
+  font-size: 20px;
   font-weight: 600;
 }
 
-.field small {
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 400;
-}
-
-.field input {
-  min-height: 48px;
-  box-sizing: border-box;
-  padding: 0 14px;
-  border: 1px solid var(--line);
-  border-radius: calc(var(--radius) - 4px);
-  background: var(--surface);
-  color: var(--ink);
-  font: inherit;
-}
-
-.added {
-  flex-basis: 100%;
+.infoTable {
   margin: 0;
+}
+
+.infoRow {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+}
+
+.infoRow:last-child {
+  border-bottom: 0;
+}
+
+.infoLabel {
+  color: var(--muted);
+}
+
+.infoValue {
+  margin: 0;
+  color: var(--ink);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.descriptionTitle {
+  margin: 18px 0 8px;
+  color: var(--ink);
+  font-family: var(--body-font);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.description,
+.descriptionClamped {
   color: var(--ink-soft);
   font-size: 14px;
+  line-height: 1.65;
+}
+
+/* About six lines, fading out at the foot. */
+.descriptionClamped {
+  overflow: hidden;
+  max-height: 9.9em;
+  mask-image: linear-gradient(180deg, #000 60%, transparent);
+}
+
+.richText {
+  display: block;
+}
+
+.richText ul,
+.richText ol {
+  margin: 0 0 10px;
+  padding-left: 20px;
+}
+
+.richText li {
+  margin: 4px 0;
+}
+
+.richText p {
+  margin: 0 0 10px;
+}
+
+.readMore {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.readMoreIcon,
+.readMoreIconUp {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentcolor;
+  stroke-linecap: round;
+  stroke-width: 2;
+  transition: transform 0.2s ease;
+}
+
+.readMoreIconUp {
+  transform: rotate(180deg);
+}
+
+.legal {
+  display: block;
+}
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--line);
+}
+
+.section {
+  border-bottom: 1px solid var(--line);
+}
+
+.summary {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  color: var(--ink);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.body {
+  margin: 0 0 12px;
+  color: var(--ink-soft);
+  font-size: 14px;
+}
+
+.faqs {
+  margin: 0 0 12px;
+}
+
+.faq {
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.faq dt {
+  font-weight: 700;
+}
+
+.faq dd {
+  margin: 2px 0 0;
+  color: var(--ink-soft);
+}
+
+/* "Have a question?" */
+
+.question {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px;
+  border: 1px solid rgb(210 162 73 / 40%);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle, rgb(210 162 73 / 22%) 1px, transparent 1.5px) 0 0 / 18px 18px,
+    var(--soft);
+}
+
+@media (min-width: 640px) {
+  .question {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.questionTitle {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--body-font);
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.questionLead {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.questionButton {
+  display: inline-flex;
+  min-height: 44px;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 20px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  background-color: #fff;
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.questionButton .buttonIcon {
+  color: #25d366;
+}
+
+.questionButton:hover {
+  background-color: rgb(37 211 102 / 10%);
+}
+
+/* Related products */
+
+.related {
+  margin-top: 56px;
+}
+
+@media (min-width: 1024px) {
+  .related {
+    margin-top: 80px;
+  }
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  color: var(--gold-text);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.relatedTitle {
+  margin: 0 0 20px;
+  color: var(--ink);
+  font-family: var(--heading-font);
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 600;
+}
+
+/* Loading */
+
+@keyframes pulse {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.skeletonGallery {
+  position: relative;
+}
+
+.skeletonStage,
+.skeletonThumb,
+.skeletonTitle,
+.skeletonTitleShort,
+.skeletonPrice,
+.skeletonButtons,
+.skeletonCard {
+  display: block;
+  border-radius: 12px;
+  background: var(--soft);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.skeletonStage {
+  aspect-ratio: 1;
+  border-radius: 16px;
+}
+
+.skeletonThumbs {
+  display: flex;
+  gap: 10px;
+  order: 2;
+  margin-top: 12px;
+}
+
+.skeletonGallery {
+  display: flex;
+  flex-direction: column;
+}
+
+.skeletonThumb {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+}
+
+@media (min-width: 1024px) {
+  .skeletonGallery {
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  .skeletonThumbs {
+    flex-direction: column;
+    order: 0;
+    margin: 0;
+  }
+
+  .skeletonThumb {
+    width: 80px;
+    height: 80px;
+  }
+
+  .skeletonStage {
+    flex: 1;
+  }
+}
+
+.skeletonTitle {
+  height: 30px;
+}
+
+.skeletonTitleShort {
+  width: 60%;
+  height: 30px;
+}
+
+.skeletonPrice {
+  width: 40%;
+  height: 36px;
+}
+
+.skeletonButtons {
+  height: 46px;
+  border-radius: 999px;
+}
+
+.skeletonCard {
+  height: 140px;
+  border-radius: 16px;
+}
+
+/* Gold focus rings */
+
+.stageButton:focus-visible,
+.stageArrow:focus-visible,
+.thumb:focus-visible,
+.thumbOn:focus-visible,
+.roundButton:focus-visible,
+.value:focus-visible,
+.valueOn:focus-visible,
+.valueGone:focus-visible,
+.step:focus-visible,
+.addButton:focus-visible,
+.buyButton:focus-visible,
+.enquire:focus-visible,
+.trustItem:focus-visible,
+.trustLink:focus-visible,
+.readMore:focus-visible,
+.questionButton:focus-visible,
+.viewCart:focus-visible,
+.lightboxImage:focus-visible,
+.lightboxZoomed:focus-visible,
+.lightboxClose:focus-visible,
+.lightboxArrow:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.lightboxClose:focus-visible,
+.lightboxArrow:focus-visible {
+  outline-color: #e0ae57;
 }
