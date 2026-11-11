@@ -12,10 +12,22 @@
 .heading {
   margin: 0;
   font-family: var(--heading-font);
-  font-size: 32px;
+  font-size: 24px;
   font-weight: var(--heading-weight);
   line-height: 1.15;
   text-wrap: balance;
+}
+
+@media (min-width: 640px) {
+  .heading {
+    font-size: 28px;
+  }
+}
+
+@media (min-width: 900px) {
+  .heading {
+    font-size: 32px;
+  }
 }
 
 .lead {
@@ -195,7 +207,19 @@
   box-sizing: border-box;
   width: min(100%, 1240px);
   margin-inline: auto;
-  padding: 48px 16px;
+  padding: 32px 12px;
+}
+
+@media (min-width: 640px) {
+  .rail {
+    padding: 40px 16px;
+  }
+}
+
+@media (min-width: 900px) {
+  .rail {
+    padding: 48px 32px;
+  }
 }
 
 .railHead {
@@ -209,9 +233,21 @@
 .railTitle {
   margin: 0;
   font-family: var(--heading-font);
-  font-size: 30px;
+  font-size: 24px;
   font-weight: 700;
   line-height: 1.1;
+}
+
+@media (min-width: 640px) {
+  .railTitle {
+    font-size: 28px;
+  }
+}
+
+@media (min-width: 900px) {
+  .railTitle {
+    font-size: 30px;
+  }
 }
 
 .railList {
@@ -239,7 +275,19 @@
   box-sizing: border-box;
   width: min(100%, 1240px);
   margin-inline: auto;
-  padding: 64px 16px;
+  padding: 40px 12px;
+}
+
+@media (min-width: 640px) {
+  .section {
+    padding: 52px 16px;
+  }
+}
+
+@media (min-width: 900px) {
+  .section {
+    padding: 64px 32px;
+  }
 }
 
 .grid {
@@ -256,17 +304,33 @@
 .promises {
   border-block: 1px solid rgb(210 162 73 / 30%);
   background: var(--surface);
+  margin-block: 0;
 }
 
 .promiseList {
   display: grid;
   box-sizing: border-box;
   width: min(100%, 1240px);
-  gap: 32px;
+  gap: 16px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   margin: 0 auto;
-  padding: 48px 16px;
+  padding: 32px 12px;
   list-style: none;
+}
+
+@media (min-width: 640px) {
+  .promiseList {
+    gap: 20px;
+    padding: 40px 16px;
+  }
+}
+
+@media (min-width: 900px) {
+  .promiseList {
+    gap: 32px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding: 48px 32px;
+  }
 }
 
 .promise {
@@ -279,14 +343,28 @@
 
 .promiseIcon {
   display: inline-flex;
-  width: 56px;
-  height: 56px;
+  width: 44px;
+  height: 44px;
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
   border: 1px solid rgb(210 162 73 / 50%);
   border-radius: 999px;
   color: var(--accent);
+}
+
+@media (min-width: 640px) {
+  .promiseIcon {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@media (min-width: 900px) {
+  .promiseIcon {
+    width: 56px;
+    height: 56px;
+  }
 }
 
 .promiseIcon svg {
@@ -302,27 +380,58 @@
 .promiseTitle {
   margin: 0;
   font-family: var(--heading-font);
-  font-size: 20px;
+  font-size: 16px;
   font-weight: var(--heading-weight);
+}
+
+@media (min-width: 900px) {
+  .promiseTitle {
+    font-size: 20px;
+  }
 }
 
 .promiseBody {
   max-width: 16rem;
   margin: 0;
   color: var(--muted);
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1.6;
+}
+
+@media (min-width: 640px) {
+  .promiseBody {
+    font-size: 13px;
+  }
+}
+
+@media (min-width: 900px) {
+  .promiseBody {
+    font-size: 14px;
+  }
 }
 
 /* Category tiles */
 
 .tiles {
   display: grid;
-  gap: 16px;
+  gap: 12px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+@media (min-width: 640px) {
+  .tiles {
+    gap: 16px;
+  }
+}
+
+@media (min-width: 900px) {
+  .tiles {
+    gap: 16px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
 .tile {
@@ -407,6 +516,7 @@
 
 .spotlight {
   background: var(--soft);
+  padding-block: 0;
 }
 
 /* A row of gold gopuram teeth on maroon under a gold zari line. */
@@ -428,9 +538,31 @@
   box-sizing: border-box;
   width: min(100%, 1240px);
   align-items: start;
-  gap: 24px;
+  gap: 16px;
   margin-inline: auto;
-  padding: 56px 16px;
+  padding: 32px 12px;
+}
+
+@media (min-width: 640px) {
+  .spotlightInner {
+    gap: 20px;
+    padding: 40px 16px;
+  }
+}
+
+@media (min-width: 768px) {
+  .spotlightInner {
+    gap: 32px;
+    padding: 48px 24px;
+  }
+}
+
+@media (min-width: 900px) {
+  .spotlightInner {
+    gap: 40px;
+    padding: 56px 32px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
 }
 
 .spotlightBanner {
@@ -521,11 +653,23 @@
 
 .spotlightGrid {
   display: grid;
-  gap: 12px;
+  gap: 8px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+@media (min-width: 640px) {
+  .spotlightGrid {
+    gap: 12px;
+  }
+}
+
+@media (min-width: 900px) {
+  .spotlightGrid {
+    gap: 16px;
+  }
 }
 
 /* Story */
@@ -535,10 +679,25 @@
   box-sizing: border-box;
   width: min(100%, 1240px);
   align-items: center;
-  gap: 48px;
+  gap: 28px;
   grid-template-columns: minmax(0, 1fr);
   margin-inline: auto;
-  padding: 64px 16px;
+  padding: 40px 12px;
+}
+
+@media (min-width: 640px) {
+  .story {
+    gap: 36px;
+    padding: 48px 16px;
+  }
+}
+
+@media (min-width: 900px) {
+  .story {
+    gap: 48px;
+    padding: 64px 32px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
 }
 
 .storyFrame {
@@ -573,10 +732,22 @@
 .storyTitle {
   margin: 0;
   font-family: var(--heading-font);
-  font-size: 36px;
+  font-size: 24px;
   font-weight: var(--heading-weight);
   line-height: 1.15;
   text-wrap: balance;
+}
+
+@media (min-width: 640px) {
+  .storyTitle {
+    font-size: 30px;
+  }
+}
+
+@media (min-width: 900px) {
+  .storyTitle {
+    font-size: 36px;
+  }
 }
 
 .accent {
@@ -785,11 +956,24 @@
 
 .signupTitle {
   max-width: 14ch;
-  margin: 0 0 16px;
+  margin: 0 0 12px;
   font-family: var(--heading-font);
-  font-size: 32px;
+  font-size: 22px;
   font-weight: var(--heading-weight);
   line-height: 1.1;
+}
+
+@media (min-width: 640px) {
+  .signupTitle {
+    margin: 0 0 16px;
+    font-size: 28px;
+  }
+}
+
+@media (min-width: 900px) {
+  .signupTitle {
+    font-size: 32px;
+  }
 }
 
 .signupBody {
