@@ -129,42 +129,45 @@
 }
 
 
-/* "Chat with us": WhatsApp's green, bottom right on every page; its words show from tablets up. */
+/* "Chat with us": a round WhatsApp-green button, bottom right on every page. Hovered or focused, it
+   opens into a pill with the words on the left and the icon on the right. The pill is always full
+   width; a clip-path trims it to the circle (and keeps the trimmed part from taking clicks), and the
+   wrapper's drop-shadow follows whatever shape is showing. */
 
-.whatsapp {
+.whatsappDock {
   position: fixed;
   z-index: 30;
   right: 12px;
   bottom: 12px;
-  display: flex;
-  min-width: 52px;
-  height: 52px;
-  box-sizing: border-box;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border-radius: 999px;
-  background: #25d366;
-  box-shadow:
-    0 0 0 6px rgb(37 211 102 / 15%),
-    0 6px 20px rgb(0 0 0 / 22%);
-  color: #fff;
-  font-weight: 800;
-  text-decoration: none;
-  transition: transform 0.3s ease;
+  filter: drop-shadow(0 6px 14px rgb(0 0 0 / 22%));
+  pointer-events: none;
 }
 
 @media (min-width: 768px) {
-  .whatsapp {
+  .whatsappDock {
     right: 20px;
     bottom: 20px;
-    height: 54px;
-    padding: 0 22px 0 16px;
   }
 }
 
-.whatsapp:hover {
-  transform: translateY(-2px);
+.whatsapp {
+  display: flex;
+  height: 56px;
+  box-sizing: border-box;
+  align-items: center;
+  gap: 10px;
+  padding: 0 15px 0 22px;
+  border-radius: 999px;
+  background: #25d366;
+  clip-path: inset(0 0 0 calc(100% - 56px) round 28px);
+  color: #fff;
+  font-size: 17px;
+  font-weight: 700;
+  pointer-events: auto;
+  text-decoration: none;
+  transition-duration: 0.3s;
+  transition-property: clip-path, transform;
+  transition-timing-function: ease;
 }
 
 .whatsappIcon {
@@ -175,29 +178,49 @@
 }
 
 .whatsappLabel {
-  position: absolute;
-  overflow: hidden;
-  width: 1px;
-  height: 1px;
-  clip-path: inset(50%);
+  opacity: 0;
   white-space: nowrap;
+  transition-duration: 0.2s;
+  transition-property: opacity;
+  transition-timing-function: ease;
 }
 
-@media (min-width: 768px) {
-  .whatsappLabel {
-    position: static;
-    width: auto;
-    height: auto;
-    clip-path: none;
-    color: #0b2e17;
-    font-size: 14px;
+.whatsapp:focus-visible {
+  clip-path: inset(0 round 28px);
+}
+
+.whatsapp:focus-visible .whatsappLabel {
+  opacity: 1;
+}
+
+@media (hover: hover) {
+  .whatsapp:hover {
+    clip-path: inset(0 round 28px);
+    transform: translateY(-2px);
+  }
+
+  .whatsapp:hover .whatsappLabel {
+    opacity: 1;
+    transition-delay: 0.08s;
   }
 }
 
-.brand:focus-visible,
-.whatsapp:focus-visible {
+@media (prefers-reduced-motion: reduce) {
+  .whatsapp,
+  .whatsappLabel {
+    transition: none;
+  }
+}
+
+.brand:focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 3px;
+}
+
+/* The clip-path would hide an outline, so the open pill shows focus with an inner ring. */
+.whatsapp:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 3px #0b2e17;
 }
 
 /* Product pages on phones: once the buy buttons scroll away, a bar keeps the price and Add to cart in reach. */
@@ -238,7 +261,7 @@
 }
 
 /* The WhatsApp button moves up out of the bar's way. */
-.shell:has(.buyBar) .whatsapp {
+.shell:has(.buyBar) .whatsappDock {
   bottom: 84px;
 }
 

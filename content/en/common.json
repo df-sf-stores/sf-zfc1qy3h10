@@ -15,14 +15,17 @@
     "account": "Account",
     "cart": "Cart",
     "cartCount": "Cart, {count, plural, one {# item} other {# items}}",
-    "findStore": "Find Store"
+    "findStore": "Find Store",
+    "signIn": "Sign in",
+    "wishlistCount": "Wishlist, {count, plural, one {# item} other {# items}}"
   },
   "contact": {
     "phone": "Phone (24x7)",
     "email": "Email",
     "address": "Visit us",
     "whatsapp": "WhatsApp us",
-    "chat": "Chat with us"
+    "chat": "Chat with us",
+    "allDay": "24x7"
   },
   "social": {
     "facebook": "Facebook",

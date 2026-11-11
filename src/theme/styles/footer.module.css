@@ -1,71 +1,67 @@
-/* Footer: deep maroon with ivory words and antique-gold accents. */
+/* Footer: a flat deep-maroon panel under a thin gold rule, ivory words and antique-gold headings. */
 
 .footer {
   --footer-ink: #f3eee3;
-  --footer-muted: rgb(243 238 227 / 72%);
+  --footer-muted: rgb(243 238 227 / 78%);
   --footer-gold: #e0ae57;
   --footer-line: rgb(224 174 87 / 22%);
 
   position: relative;
-  padding: 0 16px 88px;
-  background: linear-gradient(160deg, #2a0a0e 0%, #4a0f16 50%, #2a0a0e 100%);
+  padding: 0 20px 88px;
+  border-top: 3px solid transparent;
+  border-image: linear-gradient(90deg, #6b3a1c, #c99a4e 50%, #6b3a1c) 1;
+  background: #2b0b10;
   color: var(--footer-ink);
   font-size: 14px;
 }
 
 @media (min-width: 640px) {
   .footer {
-    padding: 0 24px 32px;
+    padding: 0 32px 32px;
   }
 }
 
+/* Equal breathing room on the left and right, growing with the screen. */
 @media (min-width: 1024px) {
   .footer {
-    padding: 0 32px 28px;
+    padding: 0 56px 24px;
   }
 }
 
-/* A gold rule with a small star at its centre, along the footer's top edge. */
-.ornament {
-  display: flex;
-  width: min(100%, 1240px);
-  align-items: center;
-  gap: 14px;
+@media (min-width: 1280px) {
+  .footer {
+    padding-inline: 96px;
+  }
+}
+
+.columns,
+.bottom,
+.base {
+  box-sizing: border-box;
+  width: min(100%, 1460px);
   margin: 0 auto;
-  padding-top: 28px;
-}
-
-.ornamentLine {
-  height: 1px;
-  flex: 1;
-  background: linear-gradient(90deg, rgb(224 174 87 / 0%), rgb(224 174 87 / 55%), rgb(224 174 87 / 0%));
-}
-
-.ornamentMark {
-  width: 14px;
-  height: 14px;
-  fill: var(--footer-gold);
 }
 
 .columns {
   display: grid;
-  box-sizing: border-box;
-  width: min(100%, 1240px);
   gap: 0;
   grid-template-columns: minmax(0, 1fr);
-  margin: 0 auto;
-  padding-top: 28px;
+  padding-top: 36px;
 }
 
 @media (min-width: 1024px) {
-  .columns {
+  .columns,
+  .bottom {
     gap: 40px;
-    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.2fr) repeat(2, minmax(0, 1fr)) minmax(0, 1.4fr);
-    padding-top: 44px;
+    grid-template-columns: minmax(0, 1.3fr) repeat(3, minmax(0, 1fr)) minmax(0, 1.15fr);
+  }
+
+  .columns {
+    padding-top: 56px;
   }
 }
 
-/* Brand: the logo in white, the tagline in gold italics, a short note and the social links. */
+/* Brand: the logo, the tagline in spaced gold capitals and a short note. */
 
 .about {
   padding-bottom: 24px;
@@ -91,66 +87,27 @@
 .logo {
   display: block;
   width: auto;
-  max-width: 220px;
-  height: 56px;
-  filter: brightness(0) invert(1);
+  max-width: 200px;
+  height: 80px;
   object-fit: contain;
   object-position: left center;
+  filter: brightness(0) invert(1);
 }
 
 .tagline {
-  margin: 14px 0 0;
+  margin: 18px 0 0;
   color: var(--footer-gold);
-  font-family: var(--heading-font);
-  font-size: 20px;
-  font-style: italic;
-  line-height: 1.3;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
 }
 
 .note {
-  max-width: 42ch;
-  margin: 10px 0 0;
-  color: var(--footer-muted);
-  line-height: 1.65;
-}
-
-.social {
-  display: flex;
-  gap: 10px;
-  margin: 18px 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.socialLink {
-  display: flex;
-  width: 44px;
-  height: 44px;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgb(224 174 87 / 45%);
-  border-radius: 999px;
+  max-width: 36ch;
+  margin: 14px 0 0;
   color: var(--footer-ink);
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease;
-}
-
-.socialLink:hover {
-  border-color: var(--footer-gold);
-  background-color: var(--footer-gold);
-  color: #35180e;
-}
-
-.socialIcon {
-  width: 20px;
-  height: 20px;
-  fill: none;
-  stroke: currentcolor;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 1.6;
+  line-height: 1.7;
 }
 
 /* Link columns: accordions on phones and tablets, open columns on desktop. */
@@ -169,11 +126,10 @@
 .touchHeading {
   margin: 0;
   color: var(--footer-gold);
-  font-family: var(--body-font);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  font-family: var(--heading-font);
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
 }
 
 @media (min-width: 1024px) {
@@ -195,7 +151,6 @@
   color: inherit;
   font: inherit;
   letter-spacing: inherit;
-  text-transform: inherit;
   cursor: pointer;
 }
 
@@ -233,41 +188,42 @@
   list-style: none;
 }
 
-.link,
-.subLink {
+.link {
   display: inline-flex;
   min-height: 40px;
   align-items: center;
+  gap: 6px;
   color: var(--footer-ink);
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 @media (min-width: 1024px) {
-  .link,
-  .subLink {
-    min-height: 32px;
+  .link {
+    min-height: 30px;
   }
 }
 
-.subList {
-  margin: 0 0 6px;
-  padding: 0 0 0 12px;
-  border-left: 1px solid var(--footer-line);
-  list-style: none;
-}
-
-.subLink {
-  color: var(--footer-muted);
-  font-size: 13px;
-}
-
-.link:hover,
-.subLink:hover {
+.link:hover {
   color: var(--footer-gold);
 }
 
-/* Get in touch: always open, so the store's phone and email are never folded away. */
+.chevron {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: var(--footer-gold);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+  transition: transform 0.2s ease;
+}
+
+.link:hover .chevron {
+  transform: translateX(2px);
+}
+
+/* Get in touch: always open, an icon beside each way to reach the store. */
 
 .touch {
   padding-top: 24px;
@@ -280,98 +236,123 @@
 }
 
 .touchHeading {
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .details {
   display: grid;
-  gap: 12px;
+  gap: 14px;
   margin: 0;
-}
-
-@media (min-width: 640px) and (max-width: 1023px) {
-  .details {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+  padding: 0;
+  list-style: none;
 }
 
 .detail {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  align-items: flex-start;
+  gap: 12px;
 }
 
-.term {
-  color: var(--footer-muted);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.value {
-  margin: 0;
-  color: var(--footer-ink);
-  font-weight: 600;
-  overflow-wrap: anywhere;
-}
-
-.buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 18px;
-}
-
-.whatsappButton,
-.storeButton {
-  display: inline-flex;
-  min-height: 44px;
-  box-sizing: border-box;
-  align-items: center;
-  gap: 8px;
-  padding: 0 16px;
-  border-radius: var(--button-radius);
-  font-size: 13px;
-  font-weight: 700;
-  text-decoration: none;
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease;
-}
-
-.whatsappButton {
-  background-color: #25d366;
-  color: #0b2e17;
-}
-
-.whatsappButton:hover {
-  background-color: #3ee07a;
-}
-
-.storeButton {
-  border: 1px solid var(--footer-gold);
-  color: var(--footer-gold);
-}
-
-.storeButton:hover {
-  background-color: var(--footer-gold);
-  color: #35180e;
-}
-
-.buttonIcon {
+.contactIcon {
   width: 18px;
   height: 18px;
+  flex: none;
+  margin-top: 1px;
   fill: none;
-  stroke: currentcolor;
+  stroke: var(--footer-gold);
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 1.6;
 }
 
-.arrow {
-  width: 14px;
-  height: 14px;
+.whatsappIcon {
+  stroke: #25d366;
+}
+
+.value {
+  color: var(--footer-ink);
+  overflow-wrap: anywhere;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.value:hover {
+  color: var(--footer-gold);
+}
+
+.badge {
+  padding: 1px 6px;
+  border: 1px solid var(--footer-gold);
+  border-radius: 4px;
+  color: var(--footer-gold);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.address {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: var(--footer-muted);
+  font-style: normal;
+  line-height: 1.55;
+}
+
+.addressName {
+  color: var(--footer-ink);
+  font-weight: 700;
+}
+
+/* Bottom row: social tiles, the store finder and the payment marks. */
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  padding-top: 28px;
+}
+
+@media (min-width: 1024px) {
+  .bottom {
+    display: grid;
+    align-items: center;
+    padding-top: 40px;
+  }
+}
+
+.social {
+  display: flex;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.socialLink {
+  display: flex;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: #fff;
+  color: #222;
+  transition: transform 0.2s ease;
+}
+
+.socialLink:hover {
+  transform: translateY(-2px);
+}
+
+.instagram {
+  color: #e1306c;
+}
+
+.socialIcon {
+  width: 22px;
+  height: 22px;
   fill: none;
   stroke: currentcolor;
   stroke-linecap: round;
@@ -379,33 +360,48 @@
   stroke-width: 1.8;
 }
 
-/* Payment methods: a row of small ivory badges. */
+.storeButton {
+  display: inline-flex;
+  min-height: 44px;
+  box-sizing: border-box;
+  align-items: center;
+  justify-self: start;
+  gap: 10px;
+  padding: 0 20px 0 14px;
+  border: 1px solid var(--footer-gold);
+  border-radius: 999px;
+  color: var(--footer-gold);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.storeButton:hover {
+  background-color: var(--footer-gold);
+  color: #35180e;
+}
+
+.storeIcon {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentcolor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+}
 
 .payments {
-  display: flex;
-  box-sizing: border-box;
-  width: min(100%, 1240px);
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px 16px;
-  margin: 28px auto 0;
-  padding-top: 20px;
-  border-top: 1px solid var(--footer-line);
+  width: 100%;
 }
 
 @media (min-width: 1024px) {
   .payments {
-    justify-content: center;
-    margin-top: 40px;
+    grid-column: 3 / -1;
   }
-}
-
-.paymentsLabel {
-  margin: 0;
-  color: var(--footer-muted);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
 }
 
 .paymentList {
@@ -417,32 +413,105 @@
   list-style: none;
 }
 
+@media (min-width: 1024px) {
+  .paymentList {
+    justify-content: flex-end;
+  }
+}
+
 .payment {
   display: flex;
-  min-width: 56px;
+  min-width: 60px;
   height: 30px;
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
   padding: 0 10px;
-  border-radius: 5px;
-  background: #fcf8f0;
-  color: #2b1613;
-  font-size: 11px;
+  border-radius: 4px;
+  background: #fff;
+  font-size: 13px;
   font-weight: 800;
-  letter-spacing: 0.02em;
   white-space: nowrap;
 }
 
+.phonepe {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #5f259f;
+  font-size: 11px;
+}
+
+.phonepeDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: #5f259f;
+}
+
+.gpay {
+  color: #4285f4;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+
+.paytm {
+  color: #002e6e;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+
+.upi {
+  color: #555;
+  font-size: 15px;
+  font-style: italic;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.rupay {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: #1b3f8f;
+  font-size: 13px;
+  font-style: italic;
+  font-weight: 900;
+}
+
+.rupayMark {
+  width: 8px;
+  height: 10px;
+  background: linear-gradient(135deg, #f37021 50%, #00954a 50%);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.mastercard {
+  width: 32px;
+  height: 20px;
+}
+
+.visa {
+  color: #1a1f71;
+  font-size: 16px;
+  text-transform: uppercase;
+  font-style: italic;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+}
+
+/* Base line: copyright, cookie settings and "Powered by". */
+
 .base {
   display: flex;
-  box-sizing: border-box;
-  width: min(100%, 1240px);
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 10px 16px;
-  margin: 18px auto 0;
+  margin-top: 24px;
   padding-top: 16px;
   border-top: 1px solid var(--footer-line);
   color: var(--footer-muted);
@@ -486,8 +555,7 @@
 .socialLink:focus-visible,
 .headingButton:focus-visible,
 .link:focus-visible,
-.subLink:focus-visible,
-.whatsappButton:focus-visible,
+.value:focus-visible,
 .storeButton:focus-visible {
   outline: 2px solid var(--footer-gold);
   outline-offset: 2px;
