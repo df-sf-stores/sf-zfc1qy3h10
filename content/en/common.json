@@ -42,7 +42,17 @@
     "upi": "UPI",
     "rupay": "RuPay",
     "mastercard": "Mastercard",
-    "visa": "Visa"
+    "visa": "Visa",
+    "marks": {
+      "phonepe": "PhonePe",
+      "gpay": "Pay",
+      "paytmPay": "pay",
+      "paytmTm": "tm",
+      "upi": "UPI",
+      "rupayRu": "Ru",
+      "rupayPay": "Pay",
+      "visa": "VISA"
+    }
   },
   "footer": {
     "note": "Thank you for shopping with us.",

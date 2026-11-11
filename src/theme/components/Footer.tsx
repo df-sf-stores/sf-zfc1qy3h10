@@ -62,33 +62,76 @@ const Chevron = () => (
   </svg>
 )
 
-/** Payment marks: small white badges, each name in its brand's colours (Mastercard as its two circles). */
+/** Payment marks: same-sized white cards, each a close likeness of its brand's mark; its name is read out, not the mark. */
 type PaymentId = 'phonepe' | 'gpay' | 'paytm' | 'upi' | 'rupay' | 'mastercard' | 'visa'
 
-const paymentClass: Record<PaymentId, string | undefined> = {
-  phonepe: styles.phonepe,
-  gpay: styles.gpay,
-  paytm: styles.paytm,
-  upi: styles.upi,
-  rupay: styles.rupay,
-  mastercard: undefined,
-  visa: styles.visa,
-}
+/** The two-arrow mark UPI and RuPay share, green behind orange. */
+const TwoArrows = () => (
+  <svg className={styles.arrows} viewBox="0 0 12 14" aria-hidden="true" focusable="false">
+    <polygon points="0,0 7,7 0,14" fill="#00954a" />
+    <polygon points="5,0 12,7 5,14" fill="#f37021" />
+  </svg>
+)
 
-const PaymentMark = ({ id, name }: { id: PaymentId; name: string }) =>
-  id === 'mastercard' ? (
-    <svg className={styles.mastercard} viewBox="0 0 38 24" role="img" aria-label={name}>
-      <circle cx="14" cy="12" r="8" fill="#eb001b" />
-      <circle cx="24" cy="12" r="8" fill="#f79e1b" />
-      <path d="M19 5.8a8 8 0 010 12.4 8 8 0 010-12.4z" fill="#ff5f00" />
-    </svg>
-  ) : (
-    <span className={paymentClass[id]}>
-      {id === 'phonepe' ? <span className={styles.phonepeDot} aria-hidden="true" /> : null}
-      {name}
-      {id === 'rupay' ? <span className={styles.rupayMark} aria-hidden="true" /> : null}
-    </span>
-  )
+const PaymentMark = ({ id }: { id: PaymentId }) => {
+  const { t } = useStorefront()
+  switch (id) {
+    case 'phonepe':
+      return (
+        <span className={styles.phonepe}>
+          <svg className={styles.phonepeIcon} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="12" r="12" fill="#5f259f" />
+            <path d="M7 8.5h8.5M10.5 8.5v4.2a3 3 0 006 0V8.5M10.5 12.7V18" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          {t('common.payments.marks.phonepe')}
+        </span>
+      )
+    case 'gpay':
+      return (
+        <span className={styles.gpay}>
+          <svg className={styles.gpayIcon} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+            <path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+            <path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" />
+            <path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+          </svg>
+          {t('common.payments.marks.gpay')}
+        </span>
+      )
+    case 'paytm':
+      return (
+        <span className={styles.paytm}>
+          {t('common.payments.marks.paytmPay')}
+          <span className={styles.paytmTm}>{t('common.payments.marks.paytmTm')}</span>
+        </span>
+      )
+    case 'upi':
+      return (
+        <span className={styles.upi}>
+          {t('common.payments.marks.upi')}
+          <TwoArrows />
+        </span>
+      )
+    case 'rupay':
+      return (
+        <span className={styles.rupay}>
+          {t('common.payments.marks.rupayRu')}
+          <span className={styles.rupayPay}>{t('common.payments.marks.rupayPay')}</span>
+          <TwoArrows />
+        </span>
+      )
+    case 'mastercard':
+      return (
+        <svg className={styles.mastercard} viewBox="0 0 38 24" aria-hidden="true" focusable="false">
+          <circle cx="14" cy="12" r="9" fill="#eb001b" />
+          <circle cx="24" cy="12" r="9" fill="#f79e1b" />
+          <path d="M19 4.4a9 9 0 010 15.2 9 9 0 010-15.2z" fill="#ff5f00" />
+        </svg>
+      )
+    case 'visa':
+      return <span className={styles.visa}>{t('common.payments.marks.visa')}</span>
+  }
+}
 
 export const Footer = () => {
   const { store, t, poweredBy } = useStorefront()
@@ -243,7 +286,10 @@ export const Footer = () => {
           <ul className={styles.paymentList}>
             {payments.map((p) => (
               <li key={p.id} className={styles.payment} title={p.name}>
-                <PaymentMark id={p.id} name={p.name} />
+                <span aria-hidden="true" className={styles.paymentMark}>
+                  <PaymentMark id={p.id} />
+                </span>
+                <span className={styles.hidden}>{p.name}</span>
               </li>
             ))}
           </ul>

@@ -421,86 +421,109 @@
 
 .payment {
   display: flex;
-  min-width: 60px;
-  height: 30px;
+  width: 68px;
+  height: 36px;
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
-  padding: 0 10px;
-  border-radius: 4px;
+  padding: 0 6px;
+  border: 1px solid rgb(255 255 255 / 60%);
+  border-radius: 6px;
   background: #fff;
-  font-size: 13px;
-  font-weight: 800;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 25%);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1;
   white-space: nowrap;
+}
+
+.paymentMark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .phonepe {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
   color: #5f259f;
-  font-size: 11px;
+  font-size: 10.5px;
+  font-weight: 700;
 }
 
-.phonepeDot {
-  width: 12px;
-  height: 12px;
-  border-radius: 999px;
-  background: #5f259f;
+.phonepeIcon {
+  width: 14px;
+  height: 14px;
+  flex: none;
 }
 
 .gpay {
-  color: #4285f4;
-  font-size: 15px;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: #5f6368;
+  font-size: 14px;
   font-weight: 600;
 }
 
+.gpayIcon {
+  width: 15px;
+  height: 15px;
+  flex: none;
+}
 
 .paytm {
   color: #002e6e;
   font-size: 16px;
-  font-weight: 900;
-  letter-spacing: -0.02em;
+  font-weight: 800;
+  letter-spacing: -0.03em;
 }
 
+.paytmTm {
+  color: #00baf2;
+}
 
 .upi {
-  color: #555;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  color: #5b5b5b;
   font-size: 15px;
   font-style: italic;
   font-weight: 900;
-  letter-spacing: 0.04em;
 }
 
 .rupay {
   display: inline-flex;
   align-items: center;
-  gap: 3px;
   color: #1b3f8f;
-  font-size: 13px;
+  font-size: 13.5px;
   font-style: italic;
   font-weight: 900;
 }
 
-.rupayMark {
-  width: 8px;
-  height: 10px;
-  background: linear-gradient(135deg, #f37021 50%, #00954a 50%);
-  clip-path: polygon(0 0, 100% 50%, 0 100%);
+.rupayPay {
+  margin-right: 2px;
+  color: #f37021;
+}
+
+.arrows {
+  width: 9px;
+  height: 11px;
+  flex: none;
 }
 
 .mastercard {
-  width: 32px;
-  height: 20px;
+  width: 36px;
+  height: 22px;
 }
 
 .visa {
   color: #1a1f71;
   font-size: 16px;
-  text-transform: uppercase;
   font-style: italic;
   font-weight: 900;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
 }
 
 /* Base line: copyright, cookie settings and "Powered by". */
